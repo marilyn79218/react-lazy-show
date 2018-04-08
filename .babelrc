@@ -1,0 +1,26 @@
+{
+  "presets": [
+    [
+      "env",
+      {
+        "modules": false
+      }
+    ],
+    "react"
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        [
+          "env"
+        ],
+        "react"
+      ]
+    }
+  },
+  "plugins": [
+    "babel-plugin-transform-class-properties",
+    "transform-object-rest-spread",
+    "external-helpers"
+  ]
+}
