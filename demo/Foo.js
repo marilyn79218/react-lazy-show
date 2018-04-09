@@ -1,73 +1,49 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {
+  compose,
+  withState,
+  lifecycle,
+} from 'recompose';
 
 import ApiUtil from './ApiUtil';
 
-// import {
-//   compose,
-//   lifecycle,
-// } from 'recompose';
 
-// const Foo = () => (
-//   <div>
-//     <img
-//       src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0YFOOQ8qCxKlvMBYlWWEgIlXuVYmqphfxpyX1fl5k2TuH5XdaZ40YH22PGQ"
-//       alt="pic"
-//     />
-//   </div>
-// );
+const Foo = ({
+  url,
+}) => (
+  <div>
+    <img
+      src={url}
+      alt="pic"
+    />
+  </div>
+);
 
-class Foo extends React.PureComponent {
-  constructor() {
-    super();
+const hoc = compose(
+  withState('url', 'setUrl', null),
+  lifecycle({
+    componentDidMount() {
+      // Do lots of ajax & computation for Foo Component
+      ApiUtil.get().then((res) => {
+        const {
+          uid,
+        } = this.props;
 
-    this.state = {
-      url: null,
-    };
-  }
-
-  // Do lots of ajax & computation for Foo Component
-  componentDidMount() {
-    ApiUtil.get().then(res => {
-      const {
-        uid,
-      } = this.props;
-
-      const url = res[(uid % res.length)].url;
-      this.setState({
-        url,
+        const url = res[(uid % res.length)].url;
+        this.props.setUrl(url);
       });
-    });
-  }
+    },
+  }),
+);
 
-  render() {
-    return (
-      <div>
-        <img
-          src={this.state.url}
-          alt="pic"
-        />
-      </div>
-    );
-  }
-}
 
-// Foo.propTypes = {
-//   selected: PropTypes.bool,
-//   uid: PropTypes.oneOfType([
-//     PropTypes.string,
-//     PropTypes.number,
-//   ]),
-//   onClick: PropTypes.func,
-// };
+Foo.propTypes = {
+  uid: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
+  url: PropTypes.string,
+};
 
-// const hoc = compose(
-//   withState('url', 'setUrl', null),
-//   lifecycle({
-//     componentDidMount() {
-//       console.log('Foo componentDidMount');
-//     },
-//   }),
-// );
-
-export default Foo;
+export default hoc(Foo);
