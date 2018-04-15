@@ -6,7 +6,12 @@ import {
 
 import Foo from './Foo';
 
-const LazyFoo = LazyShowHOC('160px', '160px')(Foo);
+const config = {
+  width: '160px',
+  height: '160px',
+  showTime: 2000,
+};
+const LazyFoo = LazyShowHOC(config)(Foo);
 const elements = Array(50).fill(0).map((_, index) => (
   {
     id: index,

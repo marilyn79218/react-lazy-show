@@ -1,72 +1,83 @@
-# react-selectronic
-
-![Build Status](https://circleci.com/gh/WendellLiu/react-selectronic.png?circle-token=6cb81d93caa745b04d31d9dbf5ff73e47a74b7ea)
+# react-lazy-show
 
 
-inspired by [unclecheese](https://github.com/unclecheese)/[react-selectable](https://github.com/unclecheese/react-selectable)
+Inspired by [High Performance React Progressive Web Apps](https://medium.com/@paularmstrong/twitter-lite-and-high-performance-react-progressive-web-apps-at-scale-d28a00e780a3)
 
 ## Feature
-1. not support __group selection with mouse drag__
-2. support group selection with __shift key__
-3. support multiple selection with __ctrl key and cmd  key__
+Lazy load your component that matters performance only if it has exist in the viewport for a constant time.
+
+```js
+LazyShowHOC({
+  width: string,
+  height: string,
+  showTime: number,
+})(HTMLElement || React.Node): HigherOrderComponent
+```
 
 ## Example
 
 ```js
 import React from 'react';
-import {
-  SelectableGroup,
-  CreateSeletable
-} from 'react-selectronic';
+import { LazyShowHOC } from 'react-lazy-show';
 
-const Foo = ({ selected, id, onClick }) => (
-  <div
-    className={selected ? 'selected' : 'unselected'}
-    onClick={onClick}
-  >
-  </div>
-);
-
-const SelectableFoo = createSeletable(Foo);
-const elements = [1, 2, 3, 4, 5, 6, 7];
-
-class App extends React.Component {
+class Foo extends React.Component {
   this.state = {
-    selectedList: [],
+    imgUrl: '',
   };
+
+  componentDidMount() {
+    // Do lots of ajax & computation to render Foo Component
+    const {
+      instanceId,
+    } = this.props;
+
+    fetchImg(instanceId).then(({ url }) => this.setState({ imgUrl: url }));
+  }
 
   render() {
     return (
-      <SelectableGroup
-        selectedList={this.state.selectedList}
-        onChange={this.handleChange}
-        uidList={elements}
+      <div>
+        <img
+          src={url}
+          alt="pic"
+        />
+      </div>
+    )
+  }
+}
+
+const config = {
+  width: '160px',
+  height: '160px',
+  showTime: 2000,
+};
+const LazyFoo = LazyShowHOC(config)(Foo);
+const elements = [1, 2, 3, 4, 5, 6, 7];
+
+class App extends React.Component {
+  render() {
+    return (
+      <div
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          width: '100vw',
+        }}
       >
         {
-          elements.map((ele) => (
-            <SelectableFoo uid={ele} key={ele} /> // uid is required
+          elements.map(ele => (
+            <LazyFoo
+              key={ele}
+              instanceId={ele}
+            />
           ))
         }
-        <div className="nonSelectable" /> // you can insert any component not selectable
-      </SelectableGroup>
+      </div>
     );
   }
 }
 
 ```
-
-## Components
-
-### SelectableGroup
-#### Description
-group component, click functions provider which handling the selecting strategy
-
-### CreateSeletable
-#### Description
-an HOC to wrap `onClick` for the usage
-
-**Caution:**
-the wrapped component(like Foo above) **must** take `onClick` property to make select-function work.
 
 ## Development
 ```sh

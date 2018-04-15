@@ -17,17 +17,18 @@ const getAnchorStyle = (width, height) => {
     return {
       width,
       height,
-    }
+    };
   }
 
   return {
     minWidth: DEFAULT_STYLE.WIDTH,
     minHeight: DEFAULT_STYLE.HEIGHT,
   };
-}
+};
 
 // Description: 當 children 持續出現在畫面中超過 CONFIRM_SHOW_TIME，才會 render。
-const LazyShowHOC = (width, height) => Component => {
+const LazyShowHOC = ({ width, height, showTime: _showTime }) => (Component) => {
+  const showTime = _showTime || CONFIRM_SHOW_TIME;
   class LazyShow extends React.PureComponent {
     constructor(props) {
       super(props);
@@ -41,19 +42,25 @@ const LazyShowHOC = (width, height) => Component => {
       this.spentTime = 0;
     }
 
+    componentDidMount() {
+      this.scrollHandler();
+      window.addEventListener('resize', this.scrollHandler);
+      window.addEventListener('scroll', this.scrollHandler);
+    }
+
     scrollHandler = () => {
-      console.log('scrollHandler');
+      // console.log('scrollHandler');
       const { canShow } = this.state;
       const isEleInside = !this.isOutside();
 
       if (isEleInside && !canShow) {
         this.setState({ isInside: true });
-        console.log('   window scroll - isInside', isEleInside);
+        // console.log('   window scroll - isInside', isEleInside);
 
         if (!this.periodTimer) {
           this.periodTimer = setInterval(() => {
-            let isCurrentOutside = this.isOutside();
-            console.log('   interval isCurrentIside', !isCurrentOutside);
+            const isCurrentOutside = this.isOutside();
+            // console.log('   interval isCurrentIside', !isCurrentOutside);
             if (isCurrentOutside) {
               this.spentTime = 0;
               this.setState({ isInside: false });
@@ -62,9 +69,9 @@ const LazyShowHOC = (width, height) => Component => {
             }
 
             this.spentTime += PERIOD;
-            console.log('   spentTime', this.spentTime);
-            if (this.spentTime >= CONFIRM_SHOW_TIME) {
-              console.log('   canShow');
+            // console.log('   spentTime', this.spentTime);
+            if (this.spentTime >= showTime) {
+              // console.log('   canShow');
               this.spentTime = 0;
               this.setState({ canShow: true });
               this.removeTimer();
@@ -72,11 +79,6 @@ const LazyShowHOC = (width, height) => Component => {
           }, PERIOD);
         }
       }
-    }
-
-    componentDidMount() {
-      this.scrollHandler();
-      window.addEventListener('scroll', this.scrollHandler);
     }
 
     removeTimer = () => {
@@ -129,7 +131,7 @@ const LazyShowHOC = (width, height) => Component => {
   }
 
   return LazyShow;
-}
+};
 
 
 export default LazyShowHOC;
