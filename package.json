@@ -1,9 +1,9 @@
 {
-  "name": "react-selectronic",
+  "name": "react-lazy-show",
   "version": "2.0.0",
-  "main": "dist/react-selectronic.cjs.js",
-  "module": "dist/react-selectronic.esm.js",
-  "browser": "dist/react-selectronic.umd.js",
+  "main": "dist/react-lazy-show.cjs.js",
+  "module": "dist/react-lazy-show.esm.js",
+  "browser": "dist/react-lazy-show.umd.js",
   "scripts": {
     "start": "node script/develop.js",
     "build": "rollup --config config/rollup.prod.config.js --environment NODE_ENV:production",
@@ -15,13 +15,13 @@
     "precommit": "lint-staged"
   },
   "repository": {
-    "url": "git@github.com:WendellLiu/react-selectronic.git",
+    "url": "git@github.com:marilyn79218/react-lazy-show.git",
     "type": "git"
   },
   "lint-staged": {
     "*.js": "eslint"
   },
-  "author": "Wendell Liu <cuk.bas@gmail.com>",
+  "author": "marilyn72918 <marilyn72918@gmail.com>",
   "license": "MIT",
   "jest": {
     "testMatch": [
