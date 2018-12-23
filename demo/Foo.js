@@ -23,6 +23,12 @@ const Foo = ({
 const hoc = compose(
   withState('url', 'setUrl', null),
   lifecycle({
+    componentDidUpdate() {
+      const { uid } = this.props;
+
+      performance.mark(`Foo End - ${uid}`);
+      performance.measure(`Foo Measure - ${uid}`, `Foo Start - ${uid}`, `Foo End - ${uid}`);
+    },
     componentDidMount() {
       // Do lots of ajax & computation for Foo Component
       ApiUtil.get().then((res) => {

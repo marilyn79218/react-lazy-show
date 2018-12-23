@@ -114,6 +114,8 @@ const LazyShowHOC = ({ width, height, showTime: _showTime }) => (Component) => {
 
     render() {
       const { canShow } = this.state;
+      const { uid } = this.props; // eslint-disable-line
+      if (canShow) performance.mark(`Foo Start - ${uid}`);
 
       return (
         <div

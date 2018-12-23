@@ -12,14 +12,24 @@ const config = {
   showTime: 2000,
 };
 const LazyFoo = LazyShowHOC(config)(Foo);
-const elements = Array(50).fill(0).map((_, index) => (
+const elements = Array(3).fill(0).map((_, index) => (
   {
     id: index,
   }
 ));
 
-
+/* eslint-disable */
 class App extends React.PureComponent {
+  componentDidMount() {
+    const observer = new PerformanceObserver(function(list, obj) {
+      const entries = list.getEntries();
+      entries.forEach(entry => {
+        console.log('entry name', entry.name, entry)
+      });
+    });
+    observer.observe({entryTypes: ["measure"]});
+  }
+
   render() {
     return (
       <div
