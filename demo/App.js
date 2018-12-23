@@ -24,7 +24,9 @@ class App extends React.PureComponent {
     const observer = new PerformanceObserver(function(list, obj) {
       const entries = list.getEntries();
       entries.forEach(entry => {
-        console.log('entry name', entry.name, entry)
+        // Then you can try to observe the measure period between Console Tab and Chrome User Timing Section
+        if (entry.name.indexOf('Foo Measure') > -1)
+          console.log('entry name', entry.name , entry)
       });
     });
     observer.observe({entryTypes: ["measure"]});
