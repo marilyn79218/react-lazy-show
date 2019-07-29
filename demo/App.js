@@ -12,7 +12,7 @@ const config = {
   showTime: 2000,
 };
 const LazyFoo = LazyShowHOC(config)(Foo);
-const elements = Array(50).fill(0).map((_, index) => (
+const elements = Array(100).fill(0).map((_, index) => (
   {
     id: index,
   }
