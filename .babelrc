@@ -21,6 +21,7 @@
   "plugins": [
     "babel-plugin-transform-class-properties",
     "transform-object-rest-spread",
-    "external-helpers"
+    "external-helpers",
+    "transform-runtime"
   ]
 }
