@@ -1,0 +1,23 @@
+name: pr
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  path-script:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "12.14.0"
+      # - run: yarn install
+      # - run: yarn lint
+      - uses: actions/github-script@v2
+        with:
+          script: |
+            const path = require('path');
+            const scriptPath = path.resolve('./.github/workflows/githubScript.js');
+            require(scriptPath)(github, context, core);
