@@ -9,10 +9,10 @@ jobs:
   path-script:
     runs-on: ubuntu-18.04
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: "12.14.0"
+      # - uses: actions/checkout@v1
+      # - uses: actions/setup-node@v1
+      #   with:
+      #     node-version: "12.14.0"
       # - run: yarn install
       # - run: yarn lint
       - uses: actions/github-script@v2
