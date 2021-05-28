@@ -20,6 +20,9 @@ jobs:
           path: downloads
       - name: Download artifact
         uses: actions/download-artifact@v2
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: .
       - name: Collect data
         id: collect_data
         run: echo "::set-output name=downloadedData::$(node ./.github/workflows/download-cross-workflow.js)"
