@@ -1,0 +1,25 @@
+name: download-cross-workflow
+
+on:
+  pull_request:
+    branches:
+      - feat/pr-upload-data
+
+jobs:
+  download-cross-workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download artifact once PR merged
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: pr-upload-data.yml
+          name: data-arctifact
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: .
+      - name: Collect data
+        id: collect_data
+        run: echo "::set-output name=downloadedData::$(node ./.github/workflows/download-cross-workflow.js)"
+      - name: Post results to Log console
+        run: echo "The downloaded ramdom number is ${{ steps.collect_data.outputs.downloadedData }}"
