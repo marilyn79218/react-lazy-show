@@ -13,7 +13,13 @@ const path = require("path");
 
 // Case 1:
 // 綜合 (A) & (B), 我們的 actifact 路徑為 project_root_directory/artifact
-const actifactFolderPath = path.join(process.cwd(), "artifact");
+// const actifactFolderPath = path.join(process.cwd(), "artifact");
+
+// Case 2:
+// 如果今天 "upload-artifact@v2" 有設定 name 為 "uploaded-artifact"
+// 則我們的 actifact 路徑為 project_root_directory/uploaded-artifact
+const actifactFolderPath = path.join(process.cwd(), "uploaded-artifact");
+
 fs.readdirSync(actifactFolderPath, "utf-8").forEach(file => {
   if (file.endsWith(".txt")) {
     const rawFileData = fs.readFileSync(path.join(actifactFolderPath, file), "utf-8");
