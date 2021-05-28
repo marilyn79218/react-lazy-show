@@ -22,7 +22,8 @@ jobs:
         uses: actions/download-artifact@v2
       - name: Display structure of downloaded files
         run: ls -R
-        working-directory: .
+        # Can try to set "working-directory" as "." or "./artifact"
+        working-directory: ./artifact
       - name: Collect data
         id: collect_data
         run: echo "::set-output name=downloadedData::$(node ./.github/workflows/download-cross-workflow.js)"
