@@ -15,6 +15,9 @@ jobs:
         with:
           workflow: pr-upload-data.yml
           name: data-arctifact
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: .
       - name: Collect data
         id: collect_data
         run: echo "::set-output name=downloadedData::$(node ./.github/workflows/download-cross-workflow.js)"
