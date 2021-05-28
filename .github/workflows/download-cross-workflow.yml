@@ -13,7 +13,7 @@ jobs:
         run: |
           mkdir downloads
           cd downloads
-          echo "::set-output name=generatedData::$(node ../.github/workflows/generate-data.js)" > generated-data.txt
+          echo "$(node ../.github/workflows/generate-data.js)" > generated-data.txt
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
