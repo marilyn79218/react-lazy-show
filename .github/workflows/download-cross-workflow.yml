@@ -1,9 +1,9 @@
 name: download-cross-workflow
 
 on:
-  push:
+  pull_request:
     branches:
-      - master
+      - feat/pr-upload-data
 
 jobs:
   download-cross-workflow:
