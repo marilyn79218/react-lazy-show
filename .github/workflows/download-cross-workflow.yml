@@ -16,7 +16,7 @@ jobs:
         with:
           script: |
             const path = require('path');
-            const scriptPath = path.resolve('./.github/workflows/bundlesize.js');
+            const scriptPath = path.resolve('./.github/workflows/get-pr-info.js');
             await require(scriptPath)(github, context, core);
       - name: Display PR number
         run: echo "PR number - ${{ steps.get_pr_info.outputs.prInfo.number }}"
