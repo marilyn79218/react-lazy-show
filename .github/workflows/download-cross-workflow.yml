@@ -18,8 +18,11 @@ jobs:
             const path = require('path');
             const scriptPath = path.resolve('./.github/workflows/get-pr-info.js');
             await require(scriptPath)(github, context, core);
-      - name: Display PR number
-        run: echo "PR number - ${{ steps.get_pr_info.outputs.prInfo.number }}"
+      - name: Display PR info
+        run: |
+          echo "PR outputs - ${{ steps.get_pr_info.outputs }}"
+          echo "PR info - ${{ steps.get_pr_info.outputs.prInfo }}"
+          echo "PR number - ${{ steps.get_pr_info.outputs.prInfo.number }}"
       - name: Download artifact once PR merged
         uses: dawidd6/action-download-artifact@v2
         with:
