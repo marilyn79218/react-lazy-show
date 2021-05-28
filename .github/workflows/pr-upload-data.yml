@@ -1,0 +1,26 @@
+name: pr-upload-data
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  upload-data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Generate data
+        id: generate_data
+        run: |
+          mkdir downloads
+          cd downloads
+          echo "$(node ../.github/workflows/generate-data.js)" > generated-data.txt
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: data-arctifact
+          path: downloads
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: .
