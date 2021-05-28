@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Get PR number
+        run: echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }'
       - name: Download artifact once PR merged
         uses: dawidd6/action-download-artifact@v2
         with:
