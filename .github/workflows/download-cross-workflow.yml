@@ -10,12 +10,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Get PR info
+        id: get_pr_info
+        uses: actions/github-script@v2
+        with:
+          script: |
+            const path = require('path');
+            const scriptPath = path.resolve('./.github/workflows/bundlesize.js');
+            await require(scriptPath)(github, context, core);
+      - name: Display PR number
+        run: echo "PR number - ${{ steps.get_pr_info.outputs.prInfo.number }}"
       - name: Download artifact once PR merged
         uses: dawidd6/action-download-artifact@v2
         with:
           workflow: pr-upload-data.yml
           name: data-arctifact
-          pr: ${{github.event.pull_request.number}}
+          pr: ${{ steps.get_pr_info.outputs.prInfo.number }}
       - name: Display structure of downloaded files
         run: ls -R
         working-directory: .
