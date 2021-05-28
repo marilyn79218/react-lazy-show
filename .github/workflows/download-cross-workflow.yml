@@ -1,21 +1,21 @@
 name: download-cross-workflow
 
 on:
-  pull_request:
-    types: [ labeled ]
+  push:
+    branches:
+      - master
 
 jobs:
   download-cross-workflow:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Get PR number
-        run: echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }'
       - name: Download artifact once PR merged
         uses: dawidd6/action-download-artifact@v2
         with:
           workflow: pr-upload-data.yml
           name: data-arctifact
+          pr: ${{github.event.pull_request.number}}
       - name: Display structure of downloaded files
         run: ls -R
         working-directory: .
