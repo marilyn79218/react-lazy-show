@@ -16,16 +16,16 @@ jobs:
           mkdir downloads
           cd downloads
           echo "generatedData is ${{ steps.generate_data.outputs.generatedData }}"
-          echo "${{ steps.generate_data.outputs.generatedData }}" > generated-data-1.txt
+          echo "${{ steps.generate_data.outputs.generatedData }}" > generated-data.txt
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: generated-data-2.txt
+          name: data-arctifact
           path: downloads
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
-          name: generated-data-2.txt
+          name: data-arctifact
       - name: Collect data
         id: collect_data
         run: echo "::set-output name=downloadedData::$(node ./.github/workflows/download-cross-workflow.js)"
