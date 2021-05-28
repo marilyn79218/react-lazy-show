@@ -2,8 +2,7 @@ name: download-cross-workflow
 
 on:
   pull_request:
-    branches:
-      - feat/pr-upload-data
+    types: [ labeled ]
 
 jobs:
   download-cross-workflow:
