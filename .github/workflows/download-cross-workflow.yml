@@ -1,27 +1,19 @@
 name: download-cross-workflow
 
 on:
-  push
+  push:
+    branches:
+      - master
 
 jobs:
   download-cross-workflow:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Generate data
-        id: generate_data
-        run: |
-          mkdir downloads
-          cd downloads
-          echo "$(node ../.github/workflows/generate-data.js)" > generated-data.txt
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
+      - name: Download artifact once PR merged
+        uses: dawidd6/action-download-artifact@v2
         with:
-          name: data-arctifact
-          path: downloads
-      - name: Download artifact
-        uses: actions/download-artifact@v2
-        with:
+          workflow: pr-upload-data.yml
           name: data-arctifact
       - name: Collect data
         id: collect_data
