@@ -1,9 +1,9 @@
 name: download-cross-workflow
 
 on:
-  pull_request:
+  push:
     branches:
-      - feat/pr-upload-data
+      - master
 
 jobs:
   download-cross-workflow:
@@ -15,6 +15,7 @@ jobs:
         with:
           workflow: pr-upload-data.yml
           name: data-arctifact
+          pr: ${{github.event.pull_request.number}}
       - name: Display structure of downloaded files
         run: ls -R
         working-directory: .
