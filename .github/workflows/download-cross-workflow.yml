@@ -1,0 +1,33 @@
+name: download-cross-workflow
+
+on:
+  push
+
+jobs:
+  download-cross-workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Generate data
+        id: generate_data
+        run: echo "::set-output name=generatedData::$(node ./.github/workflows/generate-data.js)"
+      - name: Write to file
+        run: |
+          mkdir downloads
+          cd downloads
+          echo "generatedData is ${{ steps.generate_data.outputs.generatedData }}"
+          echo "${{ steps.generate_data.outputs.generatedData }}" > generated-data-1.txt
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: generated-data-2.txt
+          path: downloads
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: generated-data-2.txt
+      - name: Collect data
+        id: collect_data
+        run: echo "::set-output name=downloadedData::$(node ./.github/workflows/download-cross-workflow.js)"
+      - name: Post results to Log console
+        run: echo "The downloaded ramdom number is ${{ steps.collect_data.outputs.downloadedData }}"
