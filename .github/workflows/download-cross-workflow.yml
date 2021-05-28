@@ -10,13 +10,10 @@ jobs:
       - uses: actions/checkout@v2
       - name: Generate data
         id: generate_data
-        run: echo "::set-output name=generatedData::$(node ./.github/workflows/generate-data.js)"
-      - name: Write to file
         run: |
           mkdir downloads
           cd downloads
-          echo "generatedData is ${{ steps.generate_data.outputs.generatedData }}"
-          echo "${{ steps.generate_data.outputs.generatedData }}" > generated-data.txt
+          echo "::set-output name=generatedData::$(node ../.github/workflows/generate-data.js)" > generated-data.txt
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
