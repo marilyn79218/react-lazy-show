@@ -18,9 +18,5 @@ module.exports = async (github, context, core) => {
   const prInfo = listPrResponse.data[0];
   console.log("get-pr-info", prInfo);
 
-  // core.setOutput("prInfo", prInfo);
-
-  // By default, the return value of the function is JSON-encoded (?)
-  // Ref: https://github.com/actions/github-script#reading-step-results
-  return prInfo;
+  core.setOutput("prNumber", prInfo.numebr);
 };
