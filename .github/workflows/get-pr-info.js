@@ -20,3 +20,4 @@ module.exports = async (github, context, core) => {
 
   core.setOutput("prNumber", prInfo.number);
 };
+
