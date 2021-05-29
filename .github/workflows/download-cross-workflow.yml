@@ -21,13 +21,14 @@ jobs:
       - name: Display PR info
         run: |
           echo "PR outputs - ${{ steps.get_pr_info.outputs }}"
-          echo "PR number - ${{ steps.get_pr_info.outputs.prNumber }}"
+          echo "PR info - ${{ steps.get_pr_info.outputs.result }}"
+          echo "PR number - ${{ steps.get_pr_info.outputs.result.number }}"
       - name: Download artifact once PR merged
         uses: dawidd6/action-download-artifact@v2
         with:
           workflow: pr-upload-data.yml
           name: data-arctifact
-          pr: ${{ steps.get_pr_info.outputs.prNumber }}
+          pr: ${{ steps.get_pr_info.outputs.result.number }}
       - name: Display structure of downloaded files
         run: ls -R
         working-directory: .
