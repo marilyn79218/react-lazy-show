@@ -26,4 +26,3 @@ module.exports = async (github, context, core) => {
 };
 
 // Delete me - in next commit 1
-// Delete me - in next commit 2
