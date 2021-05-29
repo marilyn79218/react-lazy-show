@@ -24,5 +24,3 @@ module.exports = async (github, context, core) => {
   // Ref: https://github.com/actions/github-script#reading-step-results
   return prInfo;
 };
-
-// Delete me - in next commit 1
