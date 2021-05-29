@@ -20,5 +20,3 @@ module.exports = async (github, context, core) => {
 
   core.setOutput("prNumber", prInfo.numebr);
 };
-
-// Redundant line - 1
