@@ -12,3 +12,4 @@ fs.readdirSync(actifactFolderPath, "utf-8").forEach(file => {
     console.log(Array.isArray(fileData), fileData[0], fileData[1], fileData[2]);
   }
 });
+
