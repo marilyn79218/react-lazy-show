@@ -1,4 +1,4 @@
-name: download-cross-workflow
+name: master download cross workflow artifact
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  download-cross-workflow:
+  download-cross-workflow-artifact:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -33,6 +33,6 @@ jobs:
         working-directory: .
       - name: Collect data
         id: collect_data
-        run: echo "::set-output name=downloadedData::$(node ./.github/workflows/download-cross-workflow.js)"
+        run: echo "::set-output name=downloadedData::$(node ./.github/workflows/download-cross-workflow-artifact.js)"
       - name: Post results to Log console
         run: echo "The downloaded ramdom number is ${{ steps.collect_data.outputs.downloadedData }}"
