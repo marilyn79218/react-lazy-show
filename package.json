@@ -11,7 +11,7 @@
     "publish-demo": "yarn build-demo && node script/publishGhpage.js",
     "deploy": "gh-pages -d static",
     "lint": "eslint ./",
-    "test": "jest --no-cache",
+    "test": "jest --coverage",
     "precommit": "lint-staged"
   },
   "repository": {
