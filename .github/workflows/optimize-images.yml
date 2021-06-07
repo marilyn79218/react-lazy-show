@@ -1,0 +1,24 @@
+name: Optimize images
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: calibreapp/image-actions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Compress Images
+        uses: calibreapp/image-actions@master
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+
+# Note
+# This Guthub Action "calibreapp/image-actions@master" will literally add new commit to your pull request,
+# So if you still want to stay on the pull request and keep working,
+# you'll need to pull the latest commits before your changes are pushed
+# Ref: https://css-tricks.com/optimize-images-with-a-github-action/
