@@ -16,10 +16,14 @@ jobs:
         uses: actions/github-script@v4
         with:
           script: |
-            const path = require('path');
-            const scriptPath = path.resolve('./.github/workflows/get-pr-info.js');
-            const commitHash = ${{ github.event.workflow_run.head_sha }};
-            await require(scriptPath)(github, context, core, commitHash);
+            const listPrResponse = await github.repos.listPullRequestsAssociatedWithCommit({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              commit_sha: ${{ github.event.workflow_run.head_sha }}
+            });
+            const prInfo = listPrResponse.data[0];
+            console.log("get-pr-info", prInfo);
+            core.setOutput("prNumber", prInfo.number);
       - name: Display PR info
         run: |
           echo "PR outputs - ${{ steps.get_pr_info.outputs }}"
@@ -56,5 +60,6 @@ jobs:
           script: |
             const path = require('path');
             const scriptPath = path.resolve('./.github/workflows/writing-comments.js');
+            const prNumber = ${{ steps.get_pr_info.outputs.prNumber }};
             const writingData = ${{ steps.collect_data.outputs.downloadedData }};
-            await require(scriptPath)(github, context, core, writingData);
+            await require(scriptPath)(github, context, core, prNumber, writingData);
