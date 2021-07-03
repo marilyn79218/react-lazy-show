@@ -4,8 +4,9 @@
 
 const COMMENT_ANCHOR = "dependabot_test";
 
-module.exports = async (github, context, core) => {
+module.exports = async (github, context, core, data) => {
   try {
+    console.log("data", data);
     console.log("context", context);
 
     // Find comment id if exist
@@ -24,9 +25,7 @@ module.exports = async (github, context, core) => {
       }
     }
 
-    const date = new Date();
-    const localTimeString = date.toLocaleString();
-    const commentBody = `${COMMENT_ANCHOR}: ${localTimeString}`;
+    const commentBody = `${COMMENT_ANCHOR}: ${data}`;
     if (!commentId) {
       console.log("Creating comment...");
       await github.issues.createComment({
