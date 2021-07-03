@@ -3,14 +3,14 @@ name: dependabot PR CI
 on:
   workflow_run:
     workflows: ["Upload data at PR CI phase"]
-    types:
-      - completed
 
 jobs:
   dependabot-comments:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
       - name: Get PR info
         id: get_pr_info
         uses: actions/github-script@v4
