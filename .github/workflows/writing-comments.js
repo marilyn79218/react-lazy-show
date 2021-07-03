@@ -4,14 +4,15 @@
 
 const COMMENT_ANCHOR = "dependabot_test";
 
-module.exports = async (github, context, core, data) => {
+module.exports = async (github, context, core, prNumber, data) => {
   try {
+    console.log("prNumber", prNumber);
     console.log("data", data);
     console.log("context", context);
 
     // Find comment id if exist
     const { data: existingComments } = await github.issues.listComments({
-      issue_number: context.issue.number,
+      issue_number: prNumber,
       owner: context.repo.owner,
       repo: context.repo.repo,
     });
@@ -29,7 +30,7 @@ module.exports = async (github, context, core, data) => {
     if (!commentId) {
       console.log("Creating comment...");
       await github.issues.createComment({
-        issue_number: context.issue.number,
+        issue_number: prNumber,
         owner: context.repo.owner,
         repo: context.repo.repo,
         body: commentBody,

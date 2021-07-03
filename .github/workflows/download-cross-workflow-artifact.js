@@ -8,8 +8,8 @@ fs.readdirSync(actifactFolderPath, "utf-8").forEach(file => {
     const rawFileData = fs.readFileSync(path.join(actifactFolderPath, file), "utf-8");
     const fileData = JSON.parse(rawFileData);
 
-    console.log(fileData);
     console.log(Array.isArray(fileData), fileData[0], fileData[1], fileData[2]);
+    console.log(fileData);
   }
 });
 
