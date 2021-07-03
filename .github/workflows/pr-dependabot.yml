@@ -3,6 +3,8 @@ name: dependabot PR CI
 on:
   workflow_run:
     workflows: ["Upload data at PR CI phase"]
+    types:
+      - completed
 
 jobs:
   dependabot-comments:
@@ -25,7 +27,7 @@ jobs:
           echo "PR list (new) - ${{ github.event.workflow_run.pull_requests }}"
           echo "PR branch (new) - ${{ github.event.workflow_run.head_branch }}"
       - name: List PR list
-        id: get_pr_info
+        id: list_pr_info
         uses: actions/github-script@v4
         with:
           script: |
