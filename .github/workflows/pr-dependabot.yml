@@ -30,15 +30,6 @@ jobs:
           echo "PR number - ${{ steps.get_pr_info.outputs.prNumber }}"
           echo "PR list (new) - ${{ github.event.workflow_run.pull_requests }}"
           echo "PR branch (new) - ${{ github.event.workflow_run.head_branch }}"
-      - name: List PR list
-        id: list_pr_info
-        uses: actions/github-script@v4
-        with:
-          script: |
-            const path = require('path');
-            const scriptPath = path.resolve('./.github/workflows/list-pr-info.js');
-            const prList = ${{ github.event.workflow_run.pull_requests }};
-            await require(scriptPath)(github, context, core, prList);
       - name: Download artifact once bundlesize done
         uses: dawidd6/action-download-artifact@v2
         with:
