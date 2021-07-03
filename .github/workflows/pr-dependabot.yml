@@ -18,7 +18,7 @@ jobs:
           script: |
             const path = require('path');
             const scriptPath = path.resolve('./.github/workflows/get-pr-info.js');
-            const commitHash = ${{ github.event.workflow_run.head_sha }};
+            const commitHash = `${{ github.event.workflow_run.head_sha }}`
             await require(scriptPath)(github, context, core, commitHash);
       - name: Display PR info
         run: |
