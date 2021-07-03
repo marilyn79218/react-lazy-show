@@ -2,7 +2,7 @@ name: dependabot PR CI
 
 on:
   workflow_run:
-    workflows: ["pr-upload-data"]
+    workflows: ["Upload data at PR CI phase"]
     types:
       - completed
 
