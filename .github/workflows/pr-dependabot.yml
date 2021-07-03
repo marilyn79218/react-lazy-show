@@ -51,6 +51,6 @@ jobs:
           script: |
             const path = require('path');
             const scriptPath = path.resolve('./.github/workflows/writing-comments.js');
-            const prNumber = ${{ steps.get_pr_info.outputs.prNumber }};
-            const writingData = ${{ steps.collect_data.outputs.downloadedData }};
+            const prNumber = '${{ steps.get_pr_info.outputs.prNumber }}';
+            const writingData = '${{ steps.collect_data.outputs.downloadedData }}';
             await require(scriptPath)(github, context, core, prNumber, writingData);
