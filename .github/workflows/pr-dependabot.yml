@@ -9,8 +9,6 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.workflow_run.head_sha }}
       - name: Get PR info
         id: get_pr_info
         uses: actions/github-script@v4
@@ -23,12 +21,14 @@ jobs:
         run: |
           echo "PR outputs - ${{ steps.get_pr_info.outputs }}"
           echo "PR number - ${{ steps.get_pr_info.outputs.prNumber }}"
+          echo "PR list (new) - ${{ github.event.workflow_run.pull_requests }}"
+          echo "PR branch (new) - ${{ github.event.workflow_run.head_branch }}"
       - name: Download artifact once bundlesize done
         uses: dawidd6/action-download-artifact@v2
         with:
           workflow: pr-upload-data.yml
           name: data-arctifact
-          pr: ${{ steps.get_pr_info.outputs.prNumber }}
+          branch: ${{ github.event.workflow_run.head_branch }}
       - name: Display structure of downloaded files
         run: ls -R
         working-directory: .
