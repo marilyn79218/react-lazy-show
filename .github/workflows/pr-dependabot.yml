@@ -3,12 +3,9 @@ name: pr-dependabot
 on:
   workflow_run:
     workflows: ["pr-upload-data"]
-    types:
-      - completed
 
 jobs:
   dependabot-comments:
-    # if: github.actor === "dependabot[bot]"
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
