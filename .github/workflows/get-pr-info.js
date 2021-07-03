@@ -1,11 +1,13 @@
 
-module.exports = async (github, context, core) => {
+module.exports = async (github, context, core, commitHash) => {
+  const hash = commitHash || process.env.GITHUB_SHA;
+
   // Get PR associated with commit hash
   const listPrResponse = await github.repos.listPullRequestsAssociatedWithCommit(
     {
       owner: context.repo.owner,
       repo: context.repo.repo,
-      commit_sha: process.env.GITHUB_SHA,
+      commit_sha: hash,
     },
   );
 
