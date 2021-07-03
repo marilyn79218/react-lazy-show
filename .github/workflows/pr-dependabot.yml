@@ -11,6 +11,19 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
+      - name: Get PR info
+        id: get_pr_info
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const listPrResponse = await github.repos.listPullRequestsAssociatedWithCommit({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              commit_sha: ${{ github.event.workflow_run.head_sha }}
+            });
+            const prInfo = listPrResponse.data[0];
+            console.log("get-pr-info", prInfo);
+            core.setOutput("prNumber", prInfo.number);
       - name: Display PR info
         run: |
           echo "PR outputs - ${{ steps.get_pr_info.outputs }}"
