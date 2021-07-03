@@ -11,27 +11,21 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-      - name: Get PR info
-        id: get_pr_info
-        uses: actions/github-script@v4
-        env:
-          hashId: ${{ github.event.workflow_run.head_sha }}
-        with:
-          script: |
-            const listPrResponse = await github.repos.listPullRequestsAssociatedWithCommit({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              commit_sha: process.env.hashId,
-            });            
-            const prInfo = listPrResponse.data[0];
-            console.log("get-pr-info", prInfo);
-            core.setOutput("prNumber", prInfo.number);
       - name: Display PR info
         run: |
           echo "PR outputs - ${{ steps.get_pr_info.outputs }}"
           echo "PR number - ${{ steps.get_pr_info.outputs.prNumber }}"
           echo "PR list (new) - ${{ github.event.workflow_run.pull_requests }}"
           echo "PR branch (new) - ${{ github.event.workflow_run.head_branch }}"
+      - name: List PR list
+        id: list_pr_info
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const path = require('path');
+            const scriptPath = path.resolve('./.github/workflows/list-pr-info.js');
+            const prList = ${{ github.event.workflow_run.pull_requests }};
+            await require(scriptPath)(github, context, core, prList);
       - name: Download artifact once bundlesize done
         uses: dawidd6/action-download-artifact@v2
         with:
