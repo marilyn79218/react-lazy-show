@@ -1,18 +1,19 @@
-name: Download cross workflow artifact on master
+name: dependabot PR CI
 
 on:
-  push:
-    branches:
-      - master
+  workflow_run:
+    workflows: ["pr-upload-data"]
+    types:
+      - completed
 
 jobs:
-  download-cross-workflow-artifact:
-    runs-on: ubuntu-latest
+  dependabot-comments:
+    runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
       - name: Get PR info
         id: get_pr_info
-        uses: actions/github-script@v2
+        uses: actions/github-script@v4
         with:
           script: |
             const path = require('path');
@@ -22,7 +23,7 @@ jobs:
         run: |
           echo "PR outputs - ${{ steps.get_pr_info.outputs }}"
           echo "PR number - ${{ steps.get_pr_info.outputs.prNumber }}"
-      - name: Download artifact once PR merged
+      - name: Download artifact once bundlesize done
         uses: dawidd6/action-download-artifact@v2
         with:
           workflow: pr-upload-data.yml
@@ -36,3 +37,12 @@ jobs:
         run: echo "::set-output name=downloadedData::$(node ./.github/workflows/download-cross-workflow-artifact.js)"
       - name: Post results to Log console
         run: echo "The downloaded ramdom number is ${{ steps.collect_data.outputs.downloadedData }}"
+      - name: "Writing comments"
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const path = require('path');
+            const scriptPath = path.resolve('./.github/workflows/writing-comments.js');
+            const writingData = ${{ steps.collect_data.outputs.downloadedData }};
+            await require(scriptPath)(github, context, core, writingData);
