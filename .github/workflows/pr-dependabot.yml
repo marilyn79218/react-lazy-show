@@ -19,7 +19,7 @@ jobs:
             const listPrResponse = await github.repos.listPullRequestsAssociatedWithCommit({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              commit_sha: ${{ github.event.workflow_run.head_sha }}
+              commit_sha: "${{ github.event.workflow_run.head_sha }}"
             });
             const prInfo = listPrResponse.data[0];
             console.log("get-pr-info", prInfo);
