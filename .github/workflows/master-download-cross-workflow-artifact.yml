@@ -1,4 +1,4 @@
-name: master download cross workflow artifact
+name: Download cross workflow artifact on master
 
 on:
   push:

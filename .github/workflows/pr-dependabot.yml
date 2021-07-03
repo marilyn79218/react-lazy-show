@@ -1,8 +1,10 @@
-name: pr-dependabot
+name: dependabot PR CI
 
 on:
   workflow_run:
     workflows: ["pr-upload-data"]
+    types:
+      - completed
 
 jobs:
   dependabot-comments:
