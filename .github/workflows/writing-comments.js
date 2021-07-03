@@ -3,6 +3,8 @@
 // Should be removed once the test done.
 module.exports = async (github, context, core) => {
   try {
+    console.log("context", context);
+
     // Find comment id if exist
     const { data: existingComments } = await github.issues.listComments({
       issue_number: context.issue.number,
