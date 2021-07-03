@@ -3,7 +3,6 @@ name: pr-dependabot
 on:
   workflow_run:
     workflows: ["pr-upload-data"]
-    branches: [master]
     types:
       - completed
 
