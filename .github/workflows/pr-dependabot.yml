@@ -15,6 +15,7 @@ jobs:
         id: get_pr_info
         uses: actions/github-script@v4
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const listPrResponse = await github.repos.listPullRequestsAssociatedWithCommit({
               owner: context.repo.owner,
