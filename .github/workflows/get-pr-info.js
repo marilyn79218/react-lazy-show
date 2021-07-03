@@ -18,7 +18,7 @@ module.exports = async (github, context, core, commitHash) => {
   }
   
   const prInfo = listPrResponse.data[0];
-  console.log("get-pr-info", prInfo);
+  console.log("get-pr-info??????", prInfo);
 
   core.setOutput("prNumber", prInfo.number);
 };
