@@ -19,14 +19,15 @@ module.exports = async (github, context, core) => {
       }
     }
 
-    const timestamp = Date.now();
+    const date = new Date();
+    const utcString = date.toUTCString();
     if (!commentId) {
       console.log("Creating comment...");
       await github.issues.createComment({
         issue_number: context.issue.number,
         owner: context.repo.owner,
         repo: context.repo.repo,
-        body: timestamp,
+        body: utcString,
       });
     } else {
       console.log("Updating comment...", commentId);
@@ -34,7 +35,7 @@ module.exports = async (github, context, core) => {
         comment_id: commentId,
         owner: context.repo.owner,
         repo: context.repo.repo,
-        body: timestamp,
+        body: utcString,
       });
     }
   } catch (error) {
