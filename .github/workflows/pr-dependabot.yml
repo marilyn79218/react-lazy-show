@@ -14,12 +14,14 @@ jobs:
       - name: Get PR info
         id: get_pr_info
         uses: actions/github-script@v4
+        env:
+          hashId: ${{ github.event.workflow_run.head_sha }}
         with:
           script: |
             const listPrResponse = await github.repos.listPullRequestsAssociatedWithCommit({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              commit_sha: '${{ github.event.workflow_run.head_sha }}',
+              commit_sha: process.env.hashId,
             });            
             const prInfo = listPrResponse.data[0];
             console.log("get-pr-info", prInfo);
