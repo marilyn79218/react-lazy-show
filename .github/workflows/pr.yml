@@ -16,7 +16,7 @@ jobs:
       - name: "Writing comments"
         uses: actions/github-script@v4
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          # github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const path = require('path');
             const scriptPath = path.resolve('./.github/workflows/writing-comments.js');
