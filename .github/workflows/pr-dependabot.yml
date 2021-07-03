@@ -23,6 +23,8 @@ jobs:
           echo "PR number - ${{ steps.get_pr_info.outputs.prNumber }}"
           echo "PR list (new) - ${{ github.event.workflow_run.pull_requests }}"
           echo "PR branch (new) - ${{ github.event.workflow_run.head_branch }}"
+          my_array = ${{ github.event.workflow_run.pull_requests }}"
+          printf '%s\n' "${my_array[@]}"
       - name: Download artifact once bundlesize done
         uses: dawidd6/action-download-artifact@v2
         with:
