@@ -25,7 +25,7 @@ jobs:
         with:
           script: |
             const path = require('path');
-            const scriptPath = path.resolve('./.github/workflows/dependabot-comments.js');
+            const scriptPath = path.resolve('./.github/workflows/pr-dependabot/writting-comments.js');
             // Use single quote when accessing a env variable
             // Ref: https://github.com/actions/github-script/issues/143#issue-893411221
             const commitHash = '${{ github.event.workflow_run.head_sha }}';
