@@ -5,8 +5,11 @@ const COMMENT_ANCHOR = "dependabot_test";
 
 module.exports = async (github, context, core, octokit) => {
   try {
-    console.log("octokit", octokit);
-    console.log("context", context);
+    console.log("----------- octokit -----------", octokit);
+    // console.log("context", context);
+
+    console.log("----------- issues -----------", octokit.issues);
+    console.log("----------- listComments -----------", octokit.issues.listComments);
 
     // Find comment id if exist
     const { data: existingComments } = await octokit.issues.listComments({
