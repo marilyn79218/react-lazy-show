@@ -1,21 +1,30 @@
-name: dependabot PR CI (refactor)
+name: PR on workflow_run
 
 on:
+  # Doc: https://docs.github.com/en/actions/reference/events-that-trigger-workflows#workflow_run
+  # Example: https://securitylab.github.com/research/github-actions-preventing-pwn-requests/s
   workflow_run:
     workflows: ["Upload data at PR CI phase"]
     types:
       - completed
 
 jobs:
-  dependabot-comments-refactor:
+  writting-comments:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
+      - name: Display PR info
+        run: |
+          echo "PR branch  - ${{ github.event.workflow_run.head_branch }}"
+          echo "PR commit - ${{ github.event.workflow_run.head_sha }}"
       - name: Download artifact once bundlesize done
         uses: dawidd6/action-download-artifact@v2
         with:
           workflow: pr-upload-data.yml
+          # The artifact name from workflow "Upload data at PR CI phase"
           name: data-arctifact
+          # Doc: https://github.com/dawidd6/action-download-artifact#usage
+          # Doc: https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#workflow_run
           branch: ${{ github.event.workflow_run.head_branch }}
       - name: Display structure of downloaded files
         run: ls -R
@@ -26,8 +35,7 @@ jobs:
           script: |
             const path = require('path');
             const scriptPath = path.resolve('./.github/workflows/pr-dependabot/writting-comments.js');
-            // Use single quote when accessing a env variable
+            // Use SINGLE QUOTE when accessing a env variable
             // Ref: https://github.com/actions/github-script/issues/143#issue-893411221
             const commitHash = '${{ github.event.workflow_run.head_sha }}';
-            const workflow = '${{ github.event.workflow_run }}';
-            await require(scriptPath)(github, context, core, commitHash, workflow);
+            await require(scriptPath)(github, context, core, commitHash);
