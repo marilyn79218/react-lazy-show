@@ -21,6 +21,8 @@ jobs:
           script: |
             const path = require('path');
             const scriptPath = path.resolve('./.github/workflows/auth-writing-comments.js');
+            // Ref: https://github.com/actions/github-script/issues/73#issuecomment-675469777
             const { getOctokit } = require(`${process.env.GITHUB_WORKSPACE}/node_modules/@actions/github`)
+            // Use single quote when assigning env to a value
             const octokit = getOctokit('${{ secrets.GITHUB_TOKEN }}');
             await require(scriptPath)(github, context, core, octokit);
