@@ -20,7 +20,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const path = require('path');
-            const scriptPath = path.resolve('./.github/workflows/writing-comments.js');
+            const scriptPath = path.resolve('./.github/workflows/auth-writing-comments.js');
             const { getOctokit } = require(`${process.env.GITHUB_WORKSPACE}/node_modules/@actions/github`)
             const octokit = getOctokit('${{ secrets.GITHUB_TOKEN }}');
             await require(scriptPath)(github, context, core, octokit);
