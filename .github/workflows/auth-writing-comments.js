@@ -1,4 +1,4 @@
-const actionsGithub = require("@actions/github");
+const actionsGithub = require("../../node_modules/@actions/github");
 
 // It's a testing script to test whether we can generate the authed octokit by ourselves
 // And see if it allows dependabot writing comments on pull_request event
