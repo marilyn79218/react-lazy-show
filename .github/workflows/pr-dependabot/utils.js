@@ -45,3 +45,7 @@ const readFileFromArtifact = () => {
   }
 };
 
+module.exports = {
+  getPrInfo,
+  readFileFromArtifact,
+};
