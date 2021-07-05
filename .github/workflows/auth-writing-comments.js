@@ -3,10 +3,12 @@
 
 const COMMENT_ANCHOR = "dependabot_test";
 
-module.exports = async (github, context, core, octokit) => {
+module.exports = async (github, context, core, octokitParam) => {
   try {
-    console.log("----------- octokit -----------", octokit);
+    console.log("----------- octokitParam -----------", typeof octokitParam, octokitParam);
     // console.log("context", context);
+
+    const octokit = JSON.parse(octokitParam);
 
     console.log("----------- issues -----------", octokit.issues);
     console.log("----------- listComments -----------", octokit.issues.listComments);
