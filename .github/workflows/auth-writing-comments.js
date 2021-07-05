@@ -47,4 +47,4 @@ module.exports = async (github, context, core, octokit) => {
   } catch (error) {
     core.setFailed(error.message);
   }
-}s
+}
