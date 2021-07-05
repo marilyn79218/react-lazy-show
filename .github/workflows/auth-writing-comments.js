@@ -24,9 +24,11 @@ module.exports = async (github, context, core, octokit) => {
       }
     }
 
-    const date = new Date();
-    const localTimeString = date.toLocaleString();
-    const commentBody = `${COMMENT_ANCHOR}: ${context.actor} - ${context.sha}`;
+    const {
+      actor,
+      payload: { after: commitId },
+    } = context;
+    const commentBody = `${COMMENT_ANCHOR}: ${actor} - ${commitId}`;
     if (!commentId) {
       console.log("Creating comment...");
       await octokit.rest.issues.createComment({
