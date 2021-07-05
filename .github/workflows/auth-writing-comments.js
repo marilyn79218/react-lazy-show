@@ -1,7 +1,7 @@
 // It's a testing script to test dependabot writing permission
 // Should be removed once the test done.
 
-const COMMENT_ANCHOR = "dependabot_test";
+const COMMENT_ANCHOR = "dependabot_auth_myself";
 
 module.exports = async (github, context, core, octokit) => {
   try {
