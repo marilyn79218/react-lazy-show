@@ -3,18 +3,13 @@
 
 const COMMENT_ANCHOR = "dependabot_test";
 
-module.exports = async (github, context, core, octokitParam) => {
+module.exports = async (github, context, core, octokit) => {
   try {
-    console.log("----------- octokitParam -----------", typeof octokitParam, octokitParam);
-    // console.log("context", context);
-
-    const octokit = JSON.parse(octokitParam);
-
-    console.log("----------- issues -----------", octokit.issues);
-    console.log("----------- listComments -----------", octokit.issues.listComments);
+    console.log("----------- octokitParam -----------", octokit);
+    console.log("----------- context -----------", context);
 
     // Find comment id if exist
-    const { data: existingComments } = await octokit.issues.listComments({
+    const { data: existingComments } = await octokit.rest.issues.listComments({
       issue_number: context.issue.number,
       owner: context.repo.owner,
       repo: context.repo.repo,
@@ -34,7 +29,7 @@ module.exports = async (github, context, core, octokitParam) => {
     const commentBody = `${COMMENT_ANCHOR}: ${context.actor} - ${context.sha}`;
     if (!commentId) {
       console.log("Creating comment...");
-      await octokit.issues.createComment({
+      await octokit.rest.issues.createComment({
         issue_number: context.issue.number,
         owner: context.repo.owner,
         repo: context.repo.repo,
@@ -42,7 +37,7 @@ module.exports = async (github, context, core, octokitParam) => {
       });
     } else {
       console.log("Updating comment...", commentId);
-      await octokit.issues.updateComment({
+      await octokit.rest.issues.updateComment({
         comment_id: commentId,
         owner: context.repo.owner,
         repo: context.repo.repo,
