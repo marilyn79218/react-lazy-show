@@ -1,0 +1,33 @@
+name: dependabot PR CI
+
+on:
+  workflow_run:
+    workflows: ["Upload data at PR CI phase"]
+    types:
+      - completed
+
+jobs:
+  dependabot-comments:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download artifact once bundlesize done
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: pr-upload-data.yml
+          name: data-arctifact
+          branch: ${{ github.event.workflow_run.head_branch }}
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: .
+      - name: "Writing comments"
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const path = require('path');
+            const scriptPath = path.resolve('./.github/workflows/dependabot-comments.js');
+            // Use single quote when accessing a env variable
+            // Ref: https://github.com/actions/github-script/issues/143#issue-893411221
+            const commitHash = '${{ github.event.workflow_run.head_sha }}';
+            const workflow = '${{ github.event.workflow_run }}';
+            await require(scriptPath)(github, context, core, commitHash, workflow);
