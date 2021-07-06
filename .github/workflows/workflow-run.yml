@@ -9,10 +9,10 @@ name: workflow run
 # Doc: https://docs.github.com/en/actions/reference/events-that-trigger-workflows#workflow_run
 # See [detail](https://github.blog/changelog/2021-02-19-github-actions-workflows-triggered-by-dependabot-prs-will-run-with-read-only-permissions/)
 on:
-  # This workflow run runs after the workflow "Upload data at PR CI phase" is completed
+  # This workflow run runs after the workflow "pr" is completed
   # Example: https://securitylab.github.com/research/github-actions-preventing-pwn-requests/
   workflow_run:
-    workflows: ["Upload data at PR CI phase"]
+    workflows: ["pr"]
     types:
       - completed
 
@@ -33,7 +33,7 @@ jobs:
         uses: dawidd6/action-download-artifact@v2
         with:
           workflow: pr-upload-data.yml
-          # The artifact name comes from previous workflow "Upload data at PR CI phase"
+          # The artifact name comes from previous workflow "pr"
           name: data-arctifact
           # Doc: https://github.com/dawidd6/action-download-artifact#usage
           # Doc: https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#workflow_run
