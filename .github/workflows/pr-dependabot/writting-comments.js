@@ -6,7 +6,7 @@ const {
 const COMMENT_ANCHOR = "dependabot_comments";
 
 // Allowing contributor AND dependabot to write comments to a pull request
-module.exports = async (github, context, core, commitHash) => {
+module.exports = async (github, context, core, commitHash, workflow) => {
   try {
     const fileData = readFileFromArtifact();
 
@@ -14,7 +14,10 @@ module.exports = async (github, context, core, commitHash) => {
     const prNumber = prInfo.number;
 
     console.log("prNumber", prNumber);
+    console.log("data", fileData);
     console.log("context", context);
+    // TODO: curious about the workflow object
+    console.log("workflow", workflow);
 
     // Find comment id if exist
     const { data: existingComments } = await github.issues.listComments({
