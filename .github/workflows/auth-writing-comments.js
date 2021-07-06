@@ -1,19 +1,16 @@
-const actionsGithub = require("../../node_modules/@actions/github");
-
-// It's a testing script to test whether we can generate the authed octokit by ourselves
-// And see if it allows dependabot writing comments on pull_request event
+const actionsGithub = require(`${process.env.GITHUB_WORKSPACE}/node_modules/@actions/github`);
 
 const COMMENT_ANCHOR = "dependabot_test";
 
-module.exports = async (github, context, core, authToken) => {
+module.exports = async (github, context, core, token) => {
   try {
-    console.log("authToken", authToken);
+    console.log("token", token);
     console.log("context", context);
 
     const octokit = actionsGithub.getOctokit(token);
 
     // Find comment id if exist
-    const { data: existingComments } = await octokit.issues.listComments({
+    const { data: existingComments } = await octokit.rest.issues.listComments({
       issue_number: context.issue.number,
       owner: context.repo.owner,
       repo: context.repo.repo,
@@ -31,7 +28,7 @@ module.exports = async (github, context, core, authToken) => {
     const commentBody = `${COMMENT_ANCHOR}: ${context.actor} - ${context.sha}`;
     if (!commentId) {
       console.log("Creating comment...");
-      await octokit.issues.createComment({
+      await octokit.rest.issues.createComment({
         issue_number: prNumber,
         owner: context.repo.owner,
         repo: context.repo.repo,
@@ -39,7 +36,7 @@ module.exports = async (github, context, core, authToken) => {
       });
     } else {
       console.log("Updating comment...", commentId);
-      await octokit.issues.updateComment({
+      await octokit.rest.issues.updateComment({
         comment_id: commentId,
         owner: context.repo.owner,
         repo: context.repo.repo,

@@ -19,5 +19,5 @@ jobs:
           script: |
             const path = require('path');
             const scriptPath = path.resolve('./.github/workflows/auth-writing-comments.js');
-            const authToken = '${{ secrets.GITHUB_TOKEN }}';
-            await require(scriptPath)(github, context, core, authToken);
+            const token = '${{ secrets.GITHUB_TOKEN }}';
+            await require(scriptPath)(github, context, core, token);
