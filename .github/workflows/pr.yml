@@ -1,4 +1,4 @@
-name: Upload data at PR CI phase
+name: pr
 
 on:
   pull_request:

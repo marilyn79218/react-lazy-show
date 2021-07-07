@@ -1,20 +1,57 @@
+# ------------- [General Knowledge] -------------
+# Workflow syntax table
+# Doc: https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
+
+# ------------- [General Knowledge] -------------
+# Github Actions has two collections of variables:
+# (1) Contexts:
+#     There're different kinds of context object, e.g., github, env, jobb, etc.
+#     Doc: https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#contexts
+# (2) Default environment variables:
+#     Doc: https://docs.github.com/en/actions/reference/environment-variables#default-environment-variables
+#
+# You can use them in the `if` condition to prevent a job from running unless a condition is met.
+# Or use them to set up a env variable for a job/ step.
+# Or use them in a job running step directly.
+# Doc: https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#about-contexts-and-expressions
+
 name: workflow run
 
+# Since dependabot doesn't have write permission in event "pull_request", we have two options:
+# (1) Event "pull_request_target"
+#     This event runs in the context of the base of the pull request, rather than in the merge commit as the pull_request event does.
+# Doc: https://docs.github.com/en/actions/reference/events-that-trigger-workflows#pull_request_target
+# (2) Event "workflow_run"
+#     This event occurs when a workflow run is requested or completed, and allows you to execute a workflow based on the finished result of another workflow.
+# Doc: https://docs.github.com/en/actions/reference/events-that-trigger-workflows#workflow_run
+# See [detail](https://github.blog/changelog/2021-02-19-github-actions-workflows-triggered-by-dependabot-prs-will-run-with-read-only-permissions/)
+
+# To test whether this workflow works or not,
+# just re-open a PR from dependabot that might triggers dependabot to force push a new commit (say commit id `_abcde_`),
+# if it does, see whether the comment with a specific copy "dependabot_comments" contains the latest commit id `_abcde_` or not,
+# if it does, it works!
 on:
-  # This workflow run runs after the workflow "Upload data at PR CI phase" is completed
-  # Doc: https://docs.github.com/en/actions/reference/events-that-trigger-workflows#workflow_run
+  # This workflow run runs after the workflow "pr" is completed
   # Example: https://securitylab.github.com/research/github-actions-preventing-pwn-requests/
+  # Example: https://github.community/t/workflow-run-not-working-as-expected/139342
+  # Example: https://github.com/github/docs/issues/799#issuecomment-729628887
   workflow_run:
-    workflows: ["Upload data at PR CI phase"]
+    workflows: ["pr"]
     types:
       - completed
 
 jobs:
+  # Just FYI, to allow dependabot writting comments,
+  # I also tried create the octokit instance with GITHUB_TOEKN myself in pull_request event, but no luck.
+  # See [this comment in PR #44](https://github.com/marilyn79218/react-lazy-show/pull/44#issuecomment-873803780)
+  # Or [PR #58](https://github.com/marilyn79218/react-lazy-show/pull/58)
   dependabot-comments:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
       - name: Display workflow info
+        # workfslow_run properties:
+        # Doc: https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#workflow_run
         run: |
           echo "PR branch  - ${{ github.event.workflow_run.head_branch }}"
           echo "PR commit - ${{ github.event.workflow_run.head_sha }}"
@@ -22,10 +59,8 @@ jobs:
         uses: dawidd6/action-download-artifact@v2
         with:
           workflow: pr-upload-data.yml
-          # The artifact name comes from previous workflow "Upload data at PR CI phase"
+          # The artifact name comes from previous workflow "pr"
           name: data-arctifact
-          # Doc: https://github.com/dawidd6/action-download-artifact#usage
-          # Doc: https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#workflow_run
           branch: ${{ github.event.workflow_run.head_branch }}
       - name: Display structure of downloaded files
         run: ls -R
@@ -34,9 +69,13 @@ jobs:
         uses: actions/github-script@v4
         with:
           script: |
+            // Just FYI, to import modules in the github-script,
+            // see [ref](https://github.com/actions/github-script/issues/73#issuecomment-675469777)
+            // Example: PR #44 and PR #58
             const path = require('path');
             const scriptPath = path.resolve('./.github/workflows/dependabot-comments/index.js');
             // Use SINGLE QUOTE when accessing a env variable inside of the github-script
             // Ref: https://github.com/actions/github-script/issues/143#issue-893411221
+            // Ref: https://github.com/actions/github-script/issues/56#issuecomment-642188313
             const commitHash = '${{ github.event.workflow_run.head_sha }}';
             await require(scriptPath)(github, context, core, commitHash);
