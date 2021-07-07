@@ -24,3 +24,21 @@ jobs:
       - name: Display structure of downloaded files
         run: ls -R
         working-directory: .
+  dependabot-comments:
+    runs-on: ubuntu-18.04
+    # Key change: modify the permission for this job taht ran by dependabot
+    # Doc: https://docs.github.com/en/actions/reference/authentication-in-a-workflow#modifying-the-permissions-for-the-github_token
+    permissions:
+      issues: write
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14.15.4"
+      - name: "Writing comments"
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const path = require('path');
+            const scriptPath = path.resolve('./.github/workflows/dependabot-comments/permission-key.js');
+            await require(scriptPath)(github, context, core);
