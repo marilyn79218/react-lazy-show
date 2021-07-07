@@ -29,13 +29,13 @@ jobs:
     # Key change: modify the permission for this job taht ran by dependabot
     # Doc: https://docs.github.com/en/actions/reference/authentication-in-a-workflow#modifying-the-permissions-for-the-github_token
     permissions:
-      actions: read
-      checks: read
-      contents: read
-      deployments: read
+      actions: write
+      checks: write
+      contents: write
+      deployments: write
       issues: write
-      packages: read
-      statuses: read
+      packages: write
+      statuses: write
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
