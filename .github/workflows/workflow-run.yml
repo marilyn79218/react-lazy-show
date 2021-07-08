@@ -58,7 +58,7 @@ jobs:
       - name: Download artifact from other workflow
         uses: dawidd6/action-download-artifact@v2
         with:
-          workflow: pr-upload-data.yml
+          workflow: pr.yml
           # The artifact name comes from previous workflow "pr"
           name: data-arctifact
           branch: ${{ github.event.workflow_run.head_branch }}
