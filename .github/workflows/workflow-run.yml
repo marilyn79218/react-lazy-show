@@ -59,8 +59,8 @@ jobs:
         uses: dawidd6/action-download-artifact@v2
         with:
           workflow: pr.yml
-          # Search artifact from these workflow conclusion/ status, even it's a failure
-          workflow_conclusion: "completed,success,failure"
+          # Search artifact from these workflow conclusions, even it's a failure
+          workflow_conclusion: "success,failure"
           # The artifact name comes from previous workflow "pr"
           name: data-arctifact
           branch: ${{ github.event.workflow_run.head_branch }}
