@@ -25,7 +25,7 @@ jobs:
       - name: Download artifact once PR merged
         uses: dawidd6/action-download-artifact@v2
         with:
-          workflow: pr-upload-data.yml
+          workflow: pr.yml
           name: data-arctifact
           pr: ${{ steps.get_pr_info.outputs.prNumber }}
       - name: Display structure of downloaded files
