@@ -24,3 +24,13 @@ jobs:
       - name: Display structure of downloaded files
         run: ls -R
         working-directory: .
+  failure-job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: "Writing comments"
+        uses: actions/github-script@v4
+        with:
+          script: |
+            console.log("failure job...");
+            core.setFailed("failed lah");
