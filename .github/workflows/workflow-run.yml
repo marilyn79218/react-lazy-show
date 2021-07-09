@@ -55,7 +55,8 @@ jobs:
         run: |
           echo "PR branch  - ${{ github.event.workflow_run.head_branch }}"
           echo "PR commit - ${{ github.event.workflow_run.head_sha }}"
-          echo "PR conclusion - ${{ github.event.workflow_run.conclusion }}"
+          echo "Workflow status - ${{ github.event.workflow_run.status }}"
+          echo "Workflow conclusion - ${{ github.event.workflow_run.conclusion }}"
       - name: "List artifacts"
         uses: actions/github-script@v4
         with:
@@ -74,15 +75,8 @@ jobs:
         uses: actions/github-script@v4
         with:
           script: |
-            const runs = await github.actions.listWorkflowRuns({
-               owner: context.repo.owner,
-               repo: context.repo.repo,
-               workflow_id: '${{github.event.workflow.id }}'
-            });
-            console.log("runs", runs)
-            for (const run of runs.data) {
-              console.log("run", run);
-            }
+            const path = require('path');
+            const scriptPath = path.resolve('./.github/workflows/list-workflow-runs/index.js');
       - name: Download artifact from other workflow
         uses: dawidd6/action-download-artifact@v2
         with:
