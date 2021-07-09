@@ -55,6 +55,32 @@ jobs:
         run: |
           echo "PR branch  - ${{ github.event.workflow_run.head_branch }}"
           echo "PR commit - ${{ github.event.workflow_run.head_sha }}"
+      - name: "List artifacts"
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const artifacts = await github.actions.listWorkflowRunArtifacts({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               run_id: '${{github.event.workflow_run.id }}'
+            });
+            console.log("artifacts", artifacts);
+            const matchArtifact = artifacts.data.artifacts.filter((artifact) => {
+              return artifact.name == "data-arctifact"
+            })[0];
+            console.log("matchArtifact", matchArtifact);
+      - name: "List workflow runs"
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const runs = await github.actions.listWorkflowRuns({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               workflow_id: '${{github.event.workflow.id }}'
+            });
+            for (const run of runs) {
+              console.log("run", run);
+            }
       - name: Download artifact from other workflow
         uses: dawidd6/action-download-artifact@v2
         with:
