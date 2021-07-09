@@ -55,6 +55,7 @@ jobs:
         run: |
           echo "PR branch  - ${{ github.event.workflow_run.head_branch }}"
           echo "PR commit - ${{ github.event.workflow_run.head_sha }}"
+          echo "PR conclusion - ${{ github.event.workflow_run.conclusion }}"
       - name: "List artifacts"
         uses: actions/github-script@v4
         with:
@@ -78,7 +79,8 @@ jobs:
                repo: context.repo.repo,
                workflow_id: '${{github.event.workflow.id }}'
             });
-            for (const run of runs) {
+            console.log("runs", runs)
+            for (const run of runs.data) {
               console.log("run", run);
             }
       - name: Download artifact from other workflow
