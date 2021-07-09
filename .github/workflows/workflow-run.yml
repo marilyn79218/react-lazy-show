@@ -77,10 +77,13 @@ jobs:
           script: |
             const path = require('path');
             const scriptPath = path.resolve('./.github/workflows/list-workflow-runs/index.js');
+            await require(scriptPath)(github, context, core);
       - name: Download artifact from other workflow
         uses: dawidd6/action-download-artifact@v2
         with:
           workflow: pr.yml
+          # Download artifact from success workflow only
+          workflow_conclusion: "completed"
           # The artifact name comes from previous workflow "pr"
           name: data-arctifact
           branch: ${{ github.event.workflow_run.head_branch }}
