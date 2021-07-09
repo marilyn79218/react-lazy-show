@@ -1,7 +1,7 @@
 module.exports = async (github, context, core) => {
   try {
     console.log("No status ---------------------------------------");
-    const runs = await github.actions.listWorkflowRuns({
+    let runs = await github.actions.listWorkflowRuns({
       owner: context.repo.owner,
       repo: context.repo.repo,
       workflow_id: github.event.workflow.id,
@@ -12,7 +12,7 @@ module.exports = async (github, context, core) => {
     }
 
     console.log("Failure status ---------------------------------------");
-    const runs = await github.actions.listWorkflowRuns({
+    let runs = await github.actions.listWorkflowRuns({
       owner: context.repo.owner,
       repo: context.repo.repo,
       workflow_id: github.event.workflow.id,
@@ -24,7 +24,7 @@ module.exports = async (github, context, core) => {
     }
 
     console.log("Success status ---------------------------------------");
-    const runs = await github.actions.listWorkflowRuns({
+    let runs = await github.actions.listWorkflowRuns({
       owner: context.repo.owner,
       repo: context.repo.repo,
       workflow_id: github.event.workflow.id,
@@ -36,7 +36,7 @@ module.exports = async (github, context, core) => {
     }
 
     console.log("Completed status ---------------------------------------");
-    const runs = await github.actions.listWorkflowRuns({
+    let runs = await github.actions.listWorkflowRuns({
       owner: context.repo.owner,
       repo: context.repo.repo,
       workflow_id: github.event.workflow.id,
@@ -48,7 +48,7 @@ module.exports = async (github, context, core) => {
     }
 
     console.log("Complete & failure status ---------------------------------------");
-    const runs = await github.actions.listWorkflowRuns({
+    let runs = await github.actions.listWorkflowRuns({
       owner: context.repo.owner,
       repo: context.repo.repo,
       workflow_id: github.event.workflow.id,
@@ -60,7 +60,7 @@ module.exports = async (github, context, core) => {
     }
 
     console.log("Complete & success status ---------------------------------------");
-    const runs = await github.actions.listWorkflowRuns({
+    let runs = await github.actions.listWorkflowRuns({
       owner: context.repo.owner,
       repo: context.repo.repo,
       workflow_id: github.event.workflow.id,
@@ -72,7 +72,7 @@ module.exports = async (github, context, core) => {
     }
 
     console.log("Success & failure status ---------------------------------------");
-    const runs = await github.actions.listWorkflowRuns({
+    let runs = await github.actions.listWorkflowRuns({
       owner: context.repo.owner,
       repo: context.repo.repo,
       workflow_id: github.event.workflow.id,
