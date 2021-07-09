@@ -77,27 +77,28 @@ jobs:
           script: |
             const path = require('path');
             const scriptPath = path.resolve('./.github/workflows/list-workflow-runs/index.js');
-      - name: Download artifact from other workflow
-        uses: dawidd6/action-download-artifact@v2
-        with:
-          workflow: pr.yml
-          # The artifact name comes from previous workflow "pr"
-          name: data-arctifact
-          branch: ${{ github.event.workflow_run.head_branch }}
-      - name: Display structure of downloaded files
-        run: ls -R
-        working-directory: .
-      - name: "Writing comments"
-        uses: actions/github-script@v4
-        with:
-          script: |
-            // Just FYI, to import modules in the github-script,
-            // see [ref](https://github.com/actions/github-script/issues/73#issuecomment-675469777)
-            // Example: PR #44 and PR #58
-            const path = require('path');
-            const scriptPath = path.resolve('./.github/workflows/dependabot-comments/index.js');
-            // Use SINGLE QUOTE when accessing a env variable inside of the github-script
-            // Ref: https://github.com/actions/github-script/issues/143#issue-893411221
-            // Ref: https://github.com/actions/github-script/issues/56#issuecomment-642188313
-            const commitHash = '${{ github.event.workflow_run.head_sha }}';
-            await require(scriptPath)(github, context, core, commitHash);
+            await require(scriptPath)(github, context, core);
+      # - name: Download artifact from other workflow
+      #   uses: dawidd6/action-download-artifact@v2
+      #   with:
+      #     workflow: pr.yml
+      #     # The artifact name comes from previous workflow "pr"
+      #     name: data-arctifact
+      #     branch: ${{ github.event.workflow_run.head_branch }}
+      # - name: Display structure of downloaded files
+      #   run: ls -R
+      #   working-directory: .
+      # - name: "Writing comments"
+      #   uses: actions/github-script@v4
+      #   with:
+      #     script: |
+      #       // Just FYI, to import modules in the github-script,
+      #       // see [ref](https://github.com/actions/github-script/issues/73#issuecomment-675469777)
+      #       // Example: PR #44 and PR #58
+      #       const path = require('path');
+      #       const scriptPath = path.resolve('./.github/workflows/dependabot-comments/index.js');
+      #       // Use SINGLE QUOTE when accessing a env variable inside of the github-script
+      #       // Ref: https://github.com/actions/github-script/issues/143#issue-893411221
+      #       // Ref: https://github.com/actions/github-script/issues/56#issuecomment-642188313
+      #       const commitHash = '${{ github.event.workflow_run.head_sha }}';
+      #       await require(scriptPath)(github, context, core, commitHash);
