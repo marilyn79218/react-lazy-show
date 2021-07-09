@@ -84,6 +84,7 @@ jobs:
         with:
           workflow: pr.yml
           # Download artifact from success workflow only
+          # See why we only specify "completed" workflow in "/list-workflow-runs/index.js"
           workflow_conclusion: "completed"
           # The artifact name comes from previous workflow "pr"
           name: data-arctifact
