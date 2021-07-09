@@ -1,10 +1,12 @@
-module.exports = async (github, context, core) => {
+module.exports = async (github, context, core, workflowId) => {
   try {
+    console.log("workflowId", workflowId);
+
     console.log("No status ---------------------------------------");
     let runs = await github.actions.listWorkflowRuns({
       owner: context.repo.owner,
       repo: context.repo.repo,
-      workflow_id: github.event.workflow.id,
+      workflow_id: workflowId,
     });
     console.log("runs", runs)
     for (const run of runs.data.workflow_runs) {
@@ -15,7 +17,7 @@ module.exports = async (github, context, core) => {
     runs = await github.actions.listWorkflowRuns({
       owner: context.repo.owner,
       repo: context.repo.repo,
-      workflow_id: github.event.workflow.id,
+      workflow_id: workflowId,
       status: "failure",
     });
     console.log("Failure runs", runs)
@@ -27,7 +29,7 @@ module.exports = async (github, context, core) => {
     runs = await github.actions.listWorkflowRuns({
       owner: context.repo.owner,
       repo: context.repo.repo,
-      workflow_id: github.event.workflow.id,
+      workflow_id: workflowId,
       status: "success",
     });
     console.log("Success runs", runs)
@@ -39,7 +41,7 @@ module.exports = async (github, context, core) => {
     runs = await github.actions.listWorkflowRuns({
       owner: context.repo.owner,
       repo: context.repo.repo,
-      workflow_id: github.event.workflow.id,
+      workflow_id: workflowId,
       status: "completed",
     });
     console.log("Completed runs", runs)
@@ -51,7 +53,7 @@ module.exports = async (github, context, core) => {
     runs = await github.actions.listWorkflowRuns({
       owner: context.repo.owner,
       repo: context.repo.repo,
-      workflow_id: github.event.workflow.id,
+      workflow_id: workflowId,
       status: "completed,failure",
     });
     console.log("Completed & failure runs", runs);
@@ -63,7 +65,7 @@ module.exports = async (github, context, core) => {
     runs = await github.actions.listWorkflowRuns({
       owner: context.repo.owner,
       repo: context.repo.repo,
-      workflow_id: github.event.workflow.id,
+      workflow_id: workflowId,
       status: "completed,success",
     });
     console.log("Completed & success runs", runs);
@@ -75,7 +77,7 @@ module.exports = async (github, context, core) => {
     runs = await github.actions.listWorkflowRuns({
       owner: context.repo.owner,
       repo: context.repo.repo,
-      workflow_id: github.event.workflow.id,
+      workflow_id: workflowId,
       status: "success,failure",
     });
     console.log("Success & failure runs", runs);

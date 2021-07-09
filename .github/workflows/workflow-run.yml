@@ -77,7 +77,8 @@ jobs:
           script: |
             const path = require('path');
             const scriptPath = path.resolve('./.github/workflows/list-workflow-runs/index.js');
-            await require(scriptPath)(github, context, core);
+            const workflowId = `${{ github.event.workflow.id }}`;
+            await require(scriptPath)(github, context, core, workflowId);
       - name: Download artifact from other workflow
         uses: dawidd6/action-download-artifact@v2
         with:
