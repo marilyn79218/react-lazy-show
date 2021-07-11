@@ -55,6 +55,7 @@ jobs:
         run: |
           echo "PR branch  - ${{ github.event.workflow_run.head_branch }}"
           echo "PR commit - ${{ github.event.workflow_run.head_sha }}"
+          echo "Workflow actor - ${{ github.actor }}"
           echo "Workflow status - ${{ github.event.workflow_run.status }}"
           echo "Workflow conclusion - ${{ github.event.workflow_run.conclusion }}"
       # TODO: remove `dawidd6/action-download-artifact@v2` and download artifact by ourself
