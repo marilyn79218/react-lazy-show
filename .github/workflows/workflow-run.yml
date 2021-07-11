@@ -47,6 +47,7 @@ jobs:
   # Or [PR #58](https://github.com/marilyn79218/react-lazy-show/pull/58)
   dependabot-comments:
     runs-on: ubuntu-18.04
+    if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
       - uses: actions/checkout@v2
       - name: Display workflow info
