@@ -26,7 +26,7 @@ jobs:
         uses: dawidd6/action-download-artifact@v2
         with:
           workflow: pr.yml
-          name: data-arctifact
+          name: first-data-arctifact
           pr: ${{ steps.get_pr_info.outputs.prNumber }}
       - name: Display structure of downloaded files
         run: ls -R

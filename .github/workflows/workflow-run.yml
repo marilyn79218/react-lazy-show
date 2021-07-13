@@ -47,6 +47,7 @@ jobs:
   # Or [PR #58](https://github.com/marilyn79218/react-lazy-show/pull/58)
   dependabot-comments:
     runs-on: ubuntu-18.04
+    # Operators: https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#operators
     if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
       - uses: actions/checkout@v2
@@ -71,7 +72,7 @@ jobs:
       #       });
       #       console.log("artifacts", artifacts);
       #       const matchArtifact = artifacts.data.artifacts.filter((artifact) => {
-      #         return artifact.name == "data-arctifact"
+      #         return artifact.name == "first-data-arctifact"
       #       })[0];
       #       console.log("matchArtifact", matchArtifact);
       - name: Download artifact from other workflow
@@ -82,7 +83,8 @@ jobs:
           # See why we only specify "completed" workflow in "/list-workflow-runs/index.js"
           workflow_conclusion: "completed"
           # The artifact name comes from previous workflow "pr"
-          name: data-arctifact
+          # Test: remove "name" attribute to download all artifacts at once
+          # name: first-data-arctifact
           branch: ${{ github.event.workflow_run.head_branch }}
       - name: Display structure of downloaded files
         run: ls -R

@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  upload-data:
+  upload-first-data:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -15,11 +15,29 @@ jobs:
         run: |
           mkdir downloads
           cd downloads
-          echo "$(node ../.github/workflows/generate-data.js)" > generated-data.txt
+          echo "$(node ../.github/workflows/generate-data.js)" > generated-first-data.txt
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: data-arctifact
+          name: first-data-arctifact
+          path: downloads
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: .
+  upload-second-data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Generate data
+        id: generate_data
+        run: |
+          mkdir downloads
+          cd downloads
+          echo "$(node ../.github/workflows/generate-data.js)" > generated-second-data.txt
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: second-data-arctifact
           path: downloads
       - name: Display structure of downloaded files
         run: ls -R
