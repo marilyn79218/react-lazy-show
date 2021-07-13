@@ -7,7 +7,7 @@
 # (1) Contexts:
 #     There're different kinds of context object, e.g., github, env, jobb, etc.
 #     Doc: https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#contexts
-# (2) Default environment variables:
+# (2) Default environment variables (runner environment only):
 #     Doc: https://docs.github.com/en/actions/reference/environment-variables#default-environment-variables
 #
 # You can use them in the `if` condition to prevent a job from running unless a condition is met.
