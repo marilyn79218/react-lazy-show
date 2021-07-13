@@ -8,16 +8,6 @@ module.exports = async (github, context, core, filename) => {
   };
 
   const fileContent = JSON.stringify(data);
-
-  // const fileContent = JSON.stringify({
-  //   map: {
-  //     filename,
-  //     a: "Abc",
-  //     b: "aBc",
-  //     c: "abC"
-  //   }
-  // });
-
   const filePath = path.join(process.cwd(), filename);
 
   fs.writeFileSync(filePath, fileContent);
