@@ -13,14 +13,20 @@ jobs:
       - name: Display pr info
         # pull_request properties:
         # Doc: https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#pull_request
+
+        # Access "context" variable with `${{ <expression> }}` syntax (on runner or workflow file scope)
+        #   Ref: https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#about-contexts-and-expressions
+        # Access "env" variable with `$ENV_NAME` syntax (exists only on runner)
+        #   Ref: https://docs.github.com/en/actions/reference/environment-variables#about-environment-variables
         run: |
+          # Access pr commits:
           # Ref: https://github.community/t/github-sha-not-the-same-as-the-triggering-commit/18286/2
           # Ref: https://github.community/t/github-sha-but-how-to-get-the-latest-commit-reference-on-a-branch/17160/2
-          echo "PR commit  - ${{ github.event.pull_request.head.sha }}"
+          echo "PR commit - ${{ github.event.pull_request.head.sha }}"
           echo "Merge commit - ${{ github.sha }}"
           # Note 1: accessing `${GITHUB_SHA}` is equivalent to `$GITHUB_SHA`
           # Note 2: expression `${ GITHUB_SHA }` is illegal
-          # Note 3: access `$GITHUB_SHA` in workflow scope === access `process.env.GITHUB_SHA` in the github-script
+          # Note 3: access `$GITHUB_SHA` in runner scope === access `process.env.GITHUB_SHA` in the github-script
           echo "Merge commit - $GITHUB_SHA"
           echo "Repo - $GITHUB_REPOSITORY"
       - name: Generate data
@@ -31,6 +37,12 @@ jobs:
             const scriptPath = path.resolve('./.github/workflows/generate-data.js');
             const filename = "generated-first-data.txt";
             await require(scriptPath)(github, context, core, filename);
+
+            console.log("PR commit - ", '${{ github.event.pull_request.head.sha }}');
+            console.log("Merge commit - ", '${{ github.sha }}');
+            // console.log("Merge commit - ", $GITHUB_SHA); // $GITHUB_SHA is not defined
+            console.log("Merge commit - ", process.env.GITHUB_SHA);
+            console.log("Repo - ", process.env.GITHUB_REPOSITORY);
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
