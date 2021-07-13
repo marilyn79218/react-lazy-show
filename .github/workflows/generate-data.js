@@ -13,8 +13,11 @@ module.exports = async (github, context, core, filename) => {
   fs.writeFileSync(filePath, fileContent);
 
   /* Logs block */
-  const workflowRunHash = github.event.workflow_run.head_sha || "";
-  console.log("workflow run - hash", workflowRunHash);
+  console.log("github.event", github.event);
+
+  // Error: Cannot read property 'workflow_run' of undefined
+  // const workflowRunHash = github.event.workflow_run.head_sha;
+  // console.log("workflow run - hash", workflowRunHash);
 
   const githubHash = github.sha;
   console.log("github - hash", githubHash);
