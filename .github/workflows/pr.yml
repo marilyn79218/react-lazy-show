@@ -38,9 +38,12 @@ jobs:
             const scriptPath = path.resolve('./.github/workflows/generate-data.js');
             const filename = "generated-first-data.txt";
             await require(scriptPath)(github, context, core, filename);
-            console.log("PR commit - ", '${{ github.event }}');
+
+            console.log("PR commit - ", '${{ github.event.pull_request.head.sha }}');
             console.log("Merge commit - ", '${{ github.sha }}');
-            console.log("Merge commit - ", $GITHUB_SHA);
+            // console.log("Merge commit - ", $GITHUB_SHA); // $GITHUB_SHA is not defined
+            console.log("Merge commit - ", process.env.GITHUB_SHA);
+            console.log("Repo - ", process.env.GITHUB_REPOSITORY);
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
