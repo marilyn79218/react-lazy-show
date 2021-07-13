@@ -20,8 +20,7 @@ jobs:
           echo "Merge commit - ${{ github.sha }}"
           # Note 1: accessing `${GITHUB_SHA}` is equivalent to `$GITHUB_SHA`
           # Note 2: expression `${ GITHUB_SHA }` is illegal
-          # Note 3: access `$GITHUB_SHA` in workflow scope (e.g., this line)
-          #         is equal to access `process.env.GITHUB_SHA` in the github-script
+          # Note 3: access `$GITHUB_SHA` in workflow scope === access `process.env.GITHUB_SHA` in the github-script
           echo "Merge commit - $GITHUB_SHA"
           echo "Repo - $GITHUB_REPOSITORY"
       - name: Generate data
