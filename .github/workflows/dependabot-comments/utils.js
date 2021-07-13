@@ -26,19 +26,27 @@ const getPrInfo = async (github, context, core, commitHash) => {
 
 // Read artifact content that was uploaded in previous action
 const readFileFromArtifact = artifactName => {
+  console.log("actifact name", artifactName);
   try {
     let fileData;
     const actifactFolderPath = path.join(process.cwd(), artifactName);
+    console.log("actifact path", actifactFolderPath);
     fs.readdirSync(actifactFolderPath, "utf-8").forEach(file => {
+      console.log("file", file);
+
       if (file.endsWith(".txt")) {
+        console.log("txt file");
         const rawFileData = fs.readFileSync(
           path.join(actifactFolderPath, file),
           "utf-8",
         );
+        console.log("txt file - raw file data", rawFileData);
         fileData = JSON.parse(rawFileData);
+        console.log("txt file - file data", fileData);
       }
     });
 
+    console.log("file data", fileData);
     return fileData;
   } catch (err) {
     console.error(err.message);
