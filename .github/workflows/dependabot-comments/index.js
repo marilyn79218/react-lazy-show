@@ -8,7 +8,8 @@ const COMMENT_ANCHOR = "dependabot_comments";
 // Allowing contributor AND dependabot to write comments to a pull request
 module.exports = async (github, context, core, commitHash) => {
   try {
-    const fileData = readFileFromArtifact();
+    const firstFileData = readFileFromArtifact("first-data-arctifact");
+    const secondFileData = readFileFromArtifact("second-data-arctifact");
 
     const prInfo = await getPrInfo(github, context, core, commitHash);
     const prNumber = prInfo.number;
@@ -32,7 +33,7 @@ module.exports = async (github, context, core, commitHash) => {
       }
     }
 
-    const commentBody = `${fileData} (${commitHash}) <sub>${COMMENT_ANCHOR}</sub>`;
+    const commentBody = `${firstFileData} (${commitHash}) <sub>${COMMENT_ANCHOR}</sub>`;
     if (!commentId) {
       console.log("Creating comment...");
       await github.issues.createComment({

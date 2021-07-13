@@ -25,10 +25,10 @@ const getPrInfo = async (github, context, core, commitHash) => {
 };
 
 // Read artifact content that was uploaded in previous action
-const readFileFromArtifact = () => {
+const readFileFromArtifact = artifactName => {
   try {
     let fileData;
-    const actifactFolderPath = path.join(process.cwd());
+    const actifactFolderPath = path.join(process.cwd(), artifactName);
     fs.readdirSync(actifactFolderPath, "utf-8").forEach(file => {
       if (file.endsWith(".txt")) {
         const rawFileData = fs.readFileSync(
