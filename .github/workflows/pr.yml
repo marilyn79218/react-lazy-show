@@ -13,14 +13,14 @@ jobs:
       - name: Generate data
         id: generate_data
         run: |
-          mkdir downloads
-          cd downloads
+          # mkdir downloads
+          # cd downloads
           echo "$(node ../.github/workflows/generate-data.js)" > generated-first-data.txt
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: first-data-arctifact
-          path: downloads
+          # path: downloads
       - name: Display structure of downloaded files
         run: ls -R
         working-directory: .
@@ -31,14 +31,14 @@ jobs:
       - name: Generate data
         id: generate_data
         run: |
-          mkdir downloads
-          cd downloads
+          # mkdir downloads
+          # cd downloads
           echo "$(node ../.github/workflows/generate-data.js)" > generated-second-data.txt
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: second-data-arctifact
-          path: downloads
+          # path: downloads
       - name: Display structure of downloaded files
         run: ls -R
         working-directory: .
