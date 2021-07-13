@@ -10,6 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Display pr info
+        # pull_request properties:
+        # Doc: https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#pull_request
+        run: |
+          echo "Github event  - ${{ github.event }}"
+          echo "Github commit  - ${{ github.sha }}"
+          echo "Env commit - ${{ process.env.GITHUB_SHA }}"
       - name: Generate data
         uses: actions/github-script@v4
         with:
