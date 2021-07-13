@@ -19,7 +19,7 @@ jobs:
           echo "PR commit  - ${{ github.event.pull_request.head.sha }}"
           echo "Merge commit - ${{ github.sha }}"
           echo "Merge commit - ${GITHUB_SHA}"
-          echo "Repo - ${ GITHUB_REPOSITORY }"
+          echo "Repo - ${GITHUB_REPOSITORY}"
       - name: Generate data
         uses: actions/github-script@v4
         with:
