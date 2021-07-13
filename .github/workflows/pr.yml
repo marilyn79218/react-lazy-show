@@ -10,6 +10,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Display pr info
+        # pull_request properties:
+        # Doc: https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#pull_request
+        run: |
+          # Ref: https://github.community/t/github-sha-not-the-same-as-the-triggering-commit/18286/2
+          # Ref: https://github.community/t/github-sha-but-how-to-get-the-latest-commit-reference-on-a-branch/17160/2
+          echo "PR commit  - ${{ github.event.pull_request.head.sha }}"
+          echo "Merge commit - ${{ github.sha }}"
+          # Note 1: accessing `${GITHUB_SHA}` is equivalent to `$GITHUB_SHA`
+          # Note 2: expression `${ GITHUB_SHA }` is illegal
+          # Note 3: access `$GITHUB_SHA` in workflow scope === access `process.env.GITHUB_SHA` in the github-script
+          echo "Merge commit - $GITHUB_SHA"
+          echo "Repo - $GITHUB_REPOSITORY"
       - name: Generate data
         uses: actions/github-script@v4
         with:
