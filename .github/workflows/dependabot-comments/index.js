@@ -10,6 +10,7 @@ module.exports = async (github, context, core, commitHash) => {
   try {
     const firstFileData = readFileFromArtifact("generated-first-data.txt");
     const secondFileData = readFileFromArtifact("generated-second-data.txt");
+    const fileData = firstFileData.concat(secondFileData);
 
     const prInfo = await getPrInfo(github, context, core, commitHash);
     const prNumber = prInfo.number;
@@ -33,7 +34,7 @@ module.exports = async (github, context, core, commitHash) => {
       }
     }
 
-    const commentBody = `${firstFileData} (${commitHash}) <sub>${COMMENT_ANCHOR}</sub>`;
+    const commentBody = `${fileData} (${commitHash}) <sub>${COMMENT_ANCHOR}</sub>`;
     if (!commentId) {
       console.log("Creating comment...");
       await github.issues.createComment({

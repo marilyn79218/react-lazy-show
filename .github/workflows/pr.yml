@@ -11,11 +11,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Generate data
-        id: generate_data
-        run: |
-          # mkdir downloads
-          # cd downloads
-          echo "$(node ../.github/workflows/generate-data.js)" > generated-first-data.txt
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const path = require('path');
+            const scriptPath = path.resolve('./.github/workflows/generate-data.js');
+            const filename = "generated-first-data.txt";
+            await require(scriptPath)(github, context, core, filename);
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
@@ -29,11 +31,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Generate data
-        id: generate_data
-        run: |
-          # mkdir downloads
-          # cd downloads
-          echo "$(node ../.github/workflows/generate-data.js)" > generated-second-data.txt
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const path = require('path');
+            const scriptPath = path.resolve('./.github/workflows/generate-data.js');
+            const filename = "generated-second-data.txt";
+            await require(scriptPath)(github, context, core, filename);
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
