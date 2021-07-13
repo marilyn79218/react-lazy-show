@@ -14,7 +14,7 @@ jobs:
         # pull_request properties:
         # Doc: https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#pull_request
 
-        # Access "context" variable with `${{ <expression> }}` syntax:
+        # Access "context" variable with `${{ <expression> }}` syntax (on runner or workflow file scope)
         #   Ref: https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#about-contexts-and-expressions
         # Access "env" variable with `$ENV_NAME` syntax (exists only on runner)
         #   Ref: https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstepsrun
