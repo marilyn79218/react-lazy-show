@@ -17,12 +17,11 @@ jobs:
         # Access "context" variable with `${{ <expression> }}` syntax (on runner or workflow file scope)
         #   Ref: https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#about-contexts-and-expressions
         # Access "env" variable with `$ENV_NAME` syntax (exists only on runner)
-        #   Ref: https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstepsrun
+        #   Ref: https://docs.github.com/en/actions/reference/environment-variables#about-environment-variables
         run: |
           # Access pr commits:
           # Ref: https://github.community/t/github-sha-not-the-same-as-the-triggering-commit/18286/2
           # Ref: https://github.community/t/github-sha-but-how-to-get-the-latest-commit-reference-on-a-branch/17160/2
-          # Ref: https://docs.github.com/en/actions/reference/environment-variables#about-environment-variables
           echo "PR commit - ${{ github.event.pull_request.head.sha }}"
           echo "Merge commit - ${{ github.sha }}"
           # Note 1: accessing `${GITHUB_SHA}` is equivalent to `$GITHUB_SHA`
