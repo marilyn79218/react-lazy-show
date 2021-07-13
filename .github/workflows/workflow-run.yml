@@ -48,7 +48,8 @@ jobs:
   dependabot-comments:
     runs-on: ubuntu-18.04
     # Operators: https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#operators
-    if: ${{ github.actor == 'dependabot[bot]' }}
+    # Test: remove "if" condition check for temporary
+    # if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
       - uses: actions/checkout@v2
       - name: Display workflow info
