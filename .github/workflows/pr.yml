@@ -14,13 +14,12 @@ jobs:
         # pull_request properties:
         # Doc: https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#pull_request
         run: |
-          echo "Github event  - ${{ github.event }}"
-          echo "Github commit  - ${{ github.sha }}"
           # Ref: https://github.community/t/github-sha-not-the-same-as-the-triggering-commit/18286/2
           # Ref: https://github.community/t/github-sha-but-how-to-get-the-latest-commit-reference-on-a-branch/17160/2
           echo "PR commit  - ${{ github.event.pull_request.head.sha }}"
-          echo "Env commit - ${GITHUB_SHA}"
-          echo "Env actor - ${GITHUB_ACTOR}"
+          echo "Merge commit - ${{ github.sha }}"
+          echo "Merge commit - ${GITHUB_SHA}"
+          echo "Repo - ${ GITHUB_REPOSITORY }"
       - name: Generate data
         uses: actions/github-script@v4
         with:
