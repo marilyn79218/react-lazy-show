@@ -19,8 +19,8 @@ jobs:
           # Ref: https://github.community/t/github-sha-not-the-same-as-the-triggering-commit/18286/2
           # Ref: https://github.community/t/github-sha-but-how-to-get-the-latest-commit-reference-on-a-branch/17160/2
           echo "PR commit  - ${{ github.event.pull_request.head.sha }}"
-          echo "Env commit - ${{ env.GITHUB_SHA }}"
-          echo "Env actor - ${{ env.GITHUB_ACTOR }}"
+          echo "Env commit - ${GITHUB_SHA}"
+          echo "Env actor - ${GITHUB_ACTOR}"
       - name: Generate data
         uses: actions/github-script@v4
         with:
