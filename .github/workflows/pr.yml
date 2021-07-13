@@ -20,7 +20,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: first-data-arctifact
-          # path: downloads
+          path: generated-first-data.txt
       - name: Display structure of downloaded files
         run: ls -R
         working-directory: .
@@ -38,7 +38,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: second-data-arctifact
-          # path: downloads
+          path: generated-second-data.txt
       - name: Display structure of downloaded files
         run: ls -R
         working-directory: .
