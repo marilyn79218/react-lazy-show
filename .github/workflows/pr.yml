@@ -18,7 +18,10 @@ jobs:
           # Ref: https://github.community/t/github-sha-but-how-to-get-the-latest-commit-reference-on-a-branch/17160/2
           echo "PR commit  - ${{ github.event.pull_request.head.sha }}"
           echo "Merge commit - ${{ github.sha }}"
+          # Note 1: equal to access variable `process.env.GITHUB_SHA` in the github-script
+          # Note 2: expression `${ GITHUB_SHA }` is illegal
           echo "Merge commit - ${GITHUB_SHA}"
+          echo "Merge commit - $GITHUB_SHA"
           echo "Repo - ${GITHUB_REPOSITORY}"
       - name: Generate data
         uses: actions/github-script@v4
