@@ -12,19 +12,6 @@ module.exports = async (github, context, core, commitHash) => {
     const secondFileData = readFileFromArtifact("second-data-arctifact");
     const fileData = firstFileData.concat(secondFileData);
 
-    /* Logs block */
-    console.log("commitHash", commitHash);
-
-    const workflowRunHash = github.event.workflow_run.head_sha;
-    console.log("workflow run - hash", workflowRunHash);
-
-    const githubHash = github.sha;
-    console.log("github - hash", githubHash);
-
-    const envHash = process.env.GITHUB_SHA;
-    console.log("env - hash", envHash);
-    /* Logs block */
-
     const prInfo = await getPrInfo(github, context, core, commitHash);
     const prNumber = prInfo.number;
 
