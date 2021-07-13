@@ -11,4 +11,15 @@ module.exports = async (github, context, core, filename) => {
   const filePath = path.join(process.cwd(), filename);
 
   fs.writeFileSync(filePath, fileContent);
+
+  /* Logs block */
+  const workflowRunHash = github.event.workflow_run.head_sha;
+  console.log("workflow run - hash", workflowRunHash);
+
+  const githubHash = github.sha;
+  console.log("github - hash", githubHash);
+
+  const envHash = process.env.GITHUB_SHA;
+  console.log("env - hash", envHash);
+  /* Logs block */
 }
