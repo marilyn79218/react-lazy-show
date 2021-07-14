@@ -12,6 +12,8 @@ module.exports = async (github, context, core, commitHash) => {
     const secondFileData = readFileFromArtifact("second-data-arctifact");
     const fileData = firstFileData.concat(secondFileData);
 
+    console.log("context number", context.issue.number);
+
     const prInfo = await getPrInfo(github, context, core, commitHash);
     const prNumber = prInfo.number;
 
