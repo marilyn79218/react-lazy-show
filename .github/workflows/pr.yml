@@ -19,6 +19,8 @@ jobs:
         # Access "env" variable with `$ENV_NAME` syntax (exists only on runner)
         #   Ref: https://docs.github.com/en/actions/reference/environment-variables#about-environment-variables
         run: |
+          echo "PR branch - ${{ github.head_ref }}"
+          echo "PR branch - ${{ github.event.pull_request.head.ref }}"
           # Access pr commits:
           # Ref: https://github.community/t/github-sha-not-the-same-as-the-triggering-commit/18286/2
           # Ref: https://github.community/t/github-sha-but-how-to-get-the-latest-commit-reference-on-a-branch/17160/2
