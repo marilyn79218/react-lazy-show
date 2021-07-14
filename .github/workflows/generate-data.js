@@ -12,7 +12,7 @@ module.exports = async (github, context, core, filename) => {
 
   fs.writeFileSync(filePath, fileContent);
 
-  // In pull_request event, we can retrieve pr number from `context.issue`
-  console.log("context issue", context.issue);
-  console.log("context number", context.issue.number);
+  // In `pull_request` event, we can retrieve pr number from `context.issue`
+  // { owner: 'marilyn79218', repo: 'react-lazy-show', number: 18 }
+  // console.log("context issue", context.issue);
 }

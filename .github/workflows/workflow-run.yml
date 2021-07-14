@@ -53,8 +53,7 @@ jobs:
     # YAML folding operator `>`
     #   Doc: https://stackoverflow.com/questions/53098493/how-to-nicely-split-on-multiple-lines-long-conditionals-with-or-on-ansible/53099054#53099054
     if: >
-      ${{ github.event.workflow_run.event == 'pull_request' &&
-      github.actor == 'dependabot[bot]' }}
+      ${{ github.event.workflow_run.event == 'pull_request' && github.actor == 'dependabot[bot]' }}
     steps:
       - uses: actions/checkout@v2
       - name: Display workflow info
@@ -109,34 +108,3 @@ jobs:
             // Ref: https://github.com/actions/github-script/issues/56#issuecomment-642188313
             const commitHash = '${{ github.event.workflow_run.head_sha }}';
             await require(scriptPath)(github, context, core, commitHash);
-  log-payload:
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v2
-      - name: Display workflow info
-        run: |
-          echo "PR branch  - ${{ github.event.workflow_run.head_branch }}"
-          echo "PR commit - ${{ github.event.workflow_run.head_sha }}"
-          echo "Workflow actor - ${{ github.actor }}"
-          echo "Workflow status - ${{ github.event.workflow_run.status }}"
-          echo "Workflow conclusion - ${{ github.event.workflow_run.conclusion }}"
-      - name: "Log payload"
-        uses: actions/github-script@v4
-        with:
-          script: |
-            const workflowRun = '${{ github.event.workflow_run }}';
-            console.log("workflowRun", typeof workflowRun, workflowRun);
-            if (workflowRun && workflowRun.pull_requests && Array.isArray(workflowRun.pull_requests)) {
-              const prList = workflowRun.pull_requests;
-              console.log("prList", prList);
-              for (let i = prList.length; i--; ) {
-                const pr = prList[i];
-                console.log("pr", pr);
-              }
-            } else if (workflowRun && workflowRun.pull_requests) {
-              console.log("pr list", workflowRun.pull_requests);
-            } else if (!workflowRun) {
-              consoel.log("No workflowRun");
-            }
-            console.log("What up??????");
-            console.log("workflowRun (parsed)", JSON.parse(workflowRun));
