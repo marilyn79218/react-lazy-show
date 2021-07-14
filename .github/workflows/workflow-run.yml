@@ -133,4 +133,10 @@ jobs:
                 const pr = prList[i];
                 console.log("pr", pr);
               }
+            } else if (workflowRun && workflowRun.pull_requests) {
+              console.log("pr list", workflowRun.pull_requests);
+            } else if (!workflowRun) {
+              consoel.log("No workflowRun");
             }
+            console.log("What up??????");
+            console.log("workflowRun (parsed)", JSON.parse(workflowRun));
