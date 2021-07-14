@@ -81,11 +81,11 @@ jobs:
       #         return artifact.name == "first-data-arctifact"
       #       })[0];
       #       console.log("matchArtifact", matchArtifact);
-      - name: Download first artifact from other workflow
+      - name: Download all artifacts from other workflow
         uses: dawidd6/action-download-artifact@v2
         with:
           workflow: pr.yml
-          # Download artifact from success workflow only
+          # Download artifact from both successful or failed workflows
           # See why we only specify "completed" workflow in "/list-workflow-runs/index.js"
           workflow_conclusion: "completed"
           # The artifact name comes from previous workflow "pr"
@@ -109,3 +109,22 @@ jobs:
             // Ref: https://github.com/actions/github-script/issues/56#issuecomment-642188313
             const commitHash = '${{ github.event.workflow_run.head_sha }}';
             await require(scriptPath)(github, context, core, commitHash);
+  log-payload:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Display workflow info
+        run: |
+          echo "PR branch  - ${{ github.event.workflow_run.head_branch }}"
+          echo "PR commit - ${{ github.event.workflow_run.head_sha }}"
+          echo "Workflow actor - ${{ github.actor }}"
+          echo "Workflow status - ${{ github.event.workflow_run.status }}"
+          echo "Workflow conclusion - ${{ github.event.workflow_run.conclusion }}"
+      - name: "Log payload"
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const path = require('path');
+            const scriptPath = path.resolve('./.github/workflows/log-payload');
+            const workflowRun = '${{ github.event.workflow_run }}';
+            await require(scriptPath)(github, context, core, workflowRun);
