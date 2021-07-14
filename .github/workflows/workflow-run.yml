@@ -81,11 +81,11 @@ jobs:
       #         return artifact.name == "first-data-arctifact"
       #       })[0];
       #       console.log("matchArtifact", matchArtifact);
-      - name: Download first artifact from other workflow
+      - name: Download all artifacts from other workflow
         uses: dawidd6/action-download-artifact@v2
         with:
           workflow: pr.yml
-          # Download artifact from success workflow only
+          # Download artifact from both successful or failed workflows
           # See why we only specify "completed" workflow in "/list-workflow-runs/index.js"
           workflow_conclusion: "completed"
           # The artifact name comes from previous workflow "pr"
