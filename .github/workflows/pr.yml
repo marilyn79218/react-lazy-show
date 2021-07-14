@@ -1,3 +1,8 @@
+# ------------- [General Knowledge] -------------
+# (1) `source branch` is current pr branch
+# (2) `$GITHUB_SHA` means the merge commit on `source branch` instead of latest commit
+# Ref: https://github.community/t/github-sha-not-the-same-as-the-triggering-commit/18286/2
+
 name: pr
 
 on:
@@ -19,6 +24,9 @@ jobs:
         # Access "env" variable with `$ENV_NAME` syntax (exists only on runner)
         #   Ref: https://docs.github.com/en/actions/reference/environment-variables#about-environment-variables
         run: |
+          # Access pr branch:
+          # Ref: https://github.community/t/how-to-get-pr-branch-name-in-github-actions/16598/2
+          # Ref: https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#github-context
           echo "PR branch - ${{ github.head_ref }}"
           echo "PR branch - ${{ github.event.pull_request.head.ref }}"
           # Access pr commits:
