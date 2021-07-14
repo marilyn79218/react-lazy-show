@@ -48,12 +48,11 @@ jobs:
   # Or [PR #58](https://github.com/marilyn79218/react-lazy-show/pull/58)
   dependabot-comments:
     runs-on: ubuntu-18.04
-    # Github operators
+    # Workflow operators
     #   Doc: https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#operators
     # YAML folding operator `>`
     #   Doc: https://stackoverflow.com/questions/53098493/how-to-nicely-split-on-multiple-lines-long-conditionals-with-or-on-ansible/53099054#53099054
-    if: >
-      ${{ github.event.workflow_run.event == 'pull_request' && github.actor == 'dependabot[bot]' }}
+    if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
       - uses: actions/checkout@v2
       - name: Display workflow info
@@ -63,6 +62,7 @@ jobs:
           echo "PR branch  - ${{ github.event.workflow_run.head_branch }}"
           echo "PR commit - ${{ github.event.workflow_run.head_sha }}"
           echo "Workflow actor - ${{ github.actor }}"
+          echo "Workflow event - ${{ github.event.workflow_run.event }}"
           echo "Workflow status - ${{ github.event.workflow_run.status }}"
           echo "Workflow conclusion - ${{ github.event.workflow_run.conclusion }}"
       # TODO: remove `dawidd6/action-download-artifact@v2` and download artifact by ourself
