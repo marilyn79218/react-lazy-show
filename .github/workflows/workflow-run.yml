@@ -52,9 +52,10 @@ jobs:
     #   Doc: https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#operators
     # YAML folding operator `>`
     #   Doc: https://stackoverflow.com/questions/53098493/how-to-nicely-split-on-multiple-lines-long-conditionals-with-or-on-ansible/53099054#53099054
-    if: >
-      ${{ github.event.workflow_run.event == 'pull_request' &&
-      github.actor == 'dependabot[bot]' }}
+    # Test: remove actor check for temporary
+    # if: >
+    #   ${{ github.event.workflow_run.event == 'pull_request' &&
+    #   github.actor == 'dependabot[bot]' }}
     steps:
       - uses: actions/checkout@v2
       - name: Display workflow info
