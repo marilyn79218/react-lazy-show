@@ -12,6 +12,9 @@ module.exports = async (github, context, core, commitHash) => {
     const secondFileData = readFileFromArtifact("second-data-arctifact");
     const fileData = firstFileData.concat(secondFileData);
 
+    // In workflow_run event,
+    // Regardless the actor is dependabot or not, we can't retrieve pr number from it:
+    // context.issue: { owner: 'marilyn79218', repo: 'react-lazy-show', number: undefined }
     console.log("context issue", context.issue);
     console.log("context number", context.issue.number);
 

@@ -11,4 +11,8 @@ module.exports = async (github, context, core, filename) => {
   const filePath = path.join(process.cwd(), filename);
 
   fs.writeFileSync(filePath, fileContent);
+
+  // In pull_request event, we can retrieve pr number from `context.issue`
+  console.log("context issue", context.issue);
+  console.log("context number", context.issue.number);
 }
