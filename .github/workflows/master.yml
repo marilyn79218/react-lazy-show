@@ -1,4 +1,4 @@
-name: Download cross workflow artifact on master
+name: master
 
 on:
   push:
@@ -10,9 +10,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Display master info
+        run: |
+          echo "payload.before - ${{ github.event.push.before }}"
+          echo "payload.after - ${{ github.event.push.after }}"
+          echo "payload.head_commit - ${{ github.event.push.head_commit }}"
+          echo "Merge commit - ${{ github.sha }}"
+          echo "Merge commit - $GITHUB_SHA"
+          echo "Repo - $GITHUB_REPOSITORY"
       - name: Get PR info
         id: get_pr_info
-        uses: actions/github-script@v2
+        uses: actions/github-script@v4
         with:
           script: |
             const path = require('path');
