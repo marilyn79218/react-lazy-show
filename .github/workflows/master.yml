@@ -12,9 +12,9 @@ jobs:
       - uses: actions/checkout@v2
       - name: Display master info
         run: |
-          echo "payload.before - ${{ github.event.push.before }}"
-          echo "payload.after - ${{ github.event.push.after }}"
-          echo "payload.head_commit - ${{ github.event.push.head_commit }}"
+          echo "payload.before - ${{ github.event.before }}"
+          echo "payload.after - ${{ github.event.after }}"
+          echo "payload.head_commit - ${{ github.event.head_commit }}"
           echo "Merge commit - ${{ github.sha }}"
           echo "Merge commit - $GITHUB_SHA"
           echo "Repo - $GITHUB_REPOSITORY"
