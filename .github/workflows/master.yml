@@ -12,23 +12,29 @@ jobs:
       - uses: actions/checkout@v2
       - name: Display master info
         run: |
-          echo "event.ref - ${{ github.event.ref }}"
-          echo "event.base_ref - ${{ github.event.base_ref }}"
-          echo "event.before - ${{ github.event.before }}"
-          echo "event.after - ${{ github.event.after }}"
-          echo "event.head_commit - ${{ github.event.head_commit }}"
-          echo "payload - ${{ github.event.push }}"
+          # "Merge commit" (in this case) means the commit on master when it get merged
+          echo "Previous commit on master - ${{ github.event.before }}"
+          echo "Merge commit - ${{ github.event.after }}"
           echo "Merge commit - ${{ github.sha }}"
           echo "Merge commit - $GITHUB_SHA"
           echo "Repo - $GITHUB_REPOSITORY"
+      # Since we can't retrieve pr number/ pr branch via Github context object on `push` event,
+      # we have to use the commit above to get associate pr info first,
+      # then use the pr number/ pr branch in the info to download artifact.
       - name: Get PR info
         id: get_pr_info
         uses: actions/github-script@v4
         with:
           script: |
             const path = require('path');
-            const scriptPath = path.resolve('./.github/workflows/get-pr-info.js');
-            await require(scriptPath)(github, context, core);
+            const scriptPath = path.resolve('./.github/workflows/dependabot-comments/utils.js');
+            const { getPrInfo } = require(scriptPath);
+
+            // access `$GITHUB_SHA` in runner scope === access `process.env.GITHUB_SHA` in the github-script
+            const commitHash = process.env.GITHUB_SHA;
+            const prInfo = await getPrInfo(github, context, core, commitHash);
+            console.log("pr info", prInfo);
+            core.setOutput("prNumber", prInfo.number);
       - name: Display PR info
         run: |
           echo "PR outputs - ${{ steps.get_pr_info.outputs }}"
