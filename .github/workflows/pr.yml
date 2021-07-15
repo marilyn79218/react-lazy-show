@@ -29,6 +29,7 @@ jobs:
           # Ref: https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#github-context
           echo "PR branch - ${{ github.head_ref }}"
           echo "PR branch - ${{ github.event.pull_request.head.ref }}"
+          # Access pr number (see properties link above):
           echo "PR number - ${{ github.event.number }}"
           echo "PR number (nested) - ${{ github.event.pull_request.number }}"
           # Access pr commits:
