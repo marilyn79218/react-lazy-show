@@ -6,19 +6,29 @@ const {
 const COMMENT_ANCHOR = "dependabot_comments";
 
 // Allowing contributor AND dependabot to write comments to a pull request
-module.exports = async (github, context, core, commitHash) => {
+module.exports = async (github, context, core, commitHash, workflowName) => {
   try {
     const firstFileData = readFileFromArtifact("first-data-arctifact");
     const secondFileData = readFileFromArtifact("second-data-arctifact");
     const fileData = firstFileData.concat(secondFileData);
 
-    // In `workflow_run` event, regardless the actor is dependabot or not,
-    // we can't retrieve pr number from `context.issue`
-    // { owner: 'marilyn79218', repo: 'react-lazy-show', number: undefined }
-    // console.log("context issue", context.issue);
+    let prNumber;
+    switch (workflowName) {
+      case "workflow_run": {
+        // In `workflow_run` event, regardless the actor is dependabot or not,
+        // we can't retrieve pr number from `context.issue`
+        // { owner: 'marilyn79218', repo: 'react-lazy-show', number: undefined }
+        // console.log("context issue", context.issue);
 
-    const prInfo = await getPrInfo(github, context, core, commitHash);
-    const prNumber = prInfo.number;
+        const prInfo = await getPrInfo(github, context, core, commitHash);
+        prNumber = prInfo.number;
+        break;
+      }
+      case "pr": {
+        prNumber = context.issue.number;
+        break;
+      }
+    }
 
     console.log("prNumber", prNumber);
     console.log("context", context);
