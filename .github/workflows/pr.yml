@@ -84,3 +84,17 @@ jobs:
       - name: Display structure of downloaded files
         run: ls -R
         working-directory: .
+  pr-comment:
+    runs-on: ubuntu-18.04
+    if: ${{ github.actor != 'dependabot[bot]' }}
+    needs: [upload-first-data, upload-second-data]
+    steps:
+      - uses: actions/checkout@v2
+      - name: "Writing comments"
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const path = require('path');
+            const scriptPath = path.resolve('./.github/workflows/dependabot-comments/index.js');
+            const commitHash = '${{ github.event.pull_request.head.sha }}';
+            await require(scriptPath)(github, context, core, commitHash, "pr");

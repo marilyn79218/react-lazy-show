@@ -105,4 +105,4 @@ jobs:
             // Ref: https://github.com/actions/github-script/issues/143#issue-893411221
             // Ref: https://github.com/actions/github-script/issues/56#issuecomment-642188313
             const commitHash = '${{ github.event.workflow_run.head_sha }}';
-            await require(scriptPath)(github, context, core, commitHash);
+            await require(scriptPath)(github, context, core, commitHash, "workflow_run");
