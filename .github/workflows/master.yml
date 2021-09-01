@@ -21,20 +21,20 @@ jobs:
       # Since we can't retrieve pr number/ pr branch via Github context object on `push` event,
       # we have to use the commit above to get associate pr info first,
       # then use the pr number/ pr branch in the info to download artifact.
-      - name: Get PR info
-        id: get_pr_info
-        uses: actions/github-script@v4
-        with:
-          script: |
-            const path = require('path');
-            const scriptPath = path.resolve('./.github/workflows/dependabot-comments/utils.js');
-            const { getPrInfo } = require(scriptPath);
+      # - name: Get PR info
+      #   id: get_pr_info
+      #   uses: actions/github-script@v4
+      #   with:
+      #     script: |
+      #       const path = require('path');
+      #       const scriptPath = path.resolve('./.github/workflows/dependabot-comments/utils.js');
+      #       const { getPrInfo } = require(scriptPath);
 
-            // access `$GITHUB_SHA` in runner scope === access `process.env.GITHUB_SHA` in the github-script
-            const commitHash = process.env.GITHUB_SHA;
-            const prInfo = await getPrInfo(github, context, core, commitHash);
-            console.log("pr info", prInfo);
-            core.setOutput("prNumber", prInfo.number);
+      #       // access `$GITHUB_SHA` in runner scope === access `process.env.GITHUB_SHA` in the github-script
+      #       const commitHash = process.env.GITHUB_SHA;
+      #       const prInfo = await getPrInfo(github, context, core, commitHash);
+      #       console.log("pr info", prInfo);
+      #       core.setOutput("prNumber", prInfo.number);
       - name: Display PR info
         run: |
           echo "PR outputs - ${{ steps.get_pr_info.outputs }}"
@@ -44,7 +44,8 @@ jobs:
         with:
           workflow: pr.yml
           name: first-data-arctifact
-          pr: ${{ steps.get_pr_info.outputs.prNumber }}
+          commit: ${{ github.sha }}
+          # pr: ${{ steps.get_pr_info.outputs.prNumber }}
       - name: Display structure of downloaded files
         run: ls -R
         working-directory: .
