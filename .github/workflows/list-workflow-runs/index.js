@@ -6,6 +6,7 @@
 module.exports = async (github, context, core, workflowId) => {
   try {
     console.log("workflowId", workflowId);
+    console.log("context", typeof context, context);
 
     // API doc: https://octokit.github.io/rest.js/v18#actions-list-workflow-runs
     // List of status & conclusion values
@@ -60,82 +61,82 @@ module.exports = async (github, context, core, workflowId) => {
     // Ref: https://docs.github.com/en/actions/reference/events-that-trigger-workflows#workflow_run
 
     // The number of returned workflow runs in this case is > 0
-    // console.log("Failure status ---------------------------------------");
-    // runs = await github.actions.listWorkflowRuns({
-    //   owner: context.repo.owner,
-    //   repo: context.repo.repo,
-    //   workflow_id: workflowId,
-    //   status: "failure",
-    // });
-    // console.log("Failure runs", runs)
-    // for (const run of runs.data.workflow_runs) {
-    //   console.log("run", run);
-    // }
+    console.log("Failure status ---------------------------------------");
+    runs = await github.actions.listWorkflowRuns({
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      workflow_id: workflowId,
+      status: "failure",
+    });
+    console.log("Failure runs", runs)
+    for (const run of runs.data.workflow_runs) {
+      console.log("run", run);
+    }
 
     // The number of returned workflow runs in this case is > 0
-    // console.log("Success status ---------------------------------------");
-    // runs = await github.actions.listWorkflowRuns({
-    //   owner: context.repo.owner,
-    //   repo: context.repo.repo,
-    //   workflow_id: workflowId,
-    //   status: "success",
-    // });
-    // console.log("Success runs", runs)
-    // for (const run of runs.data.workflow_runs) {
-    //   console.log("run", run);
-    // }
+    console.log("Success status ---------------------------------------");
+    runs = await github.actions.listWorkflowRuns({
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      workflow_id: workflowId,
+      status: "success",
+    });
+    console.log("Success runs", runs)
+    for (const run of runs.data.workflow_runs) {
+      console.log("run", run);
+    }
 
     // The number of returned workflow runs in this case is > 0
-    // console.log("Completed status ---------------------------------------");
-    // runs = await github.actions.listWorkflowRuns({
-    //   owner: context.repo.owner,
-    //   repo: context.repo.repo,
-    //   workflow_id: workflowId,
-    //   status: "completed",
-    // });
-    // console.log("Completed runs", runs)
-    // for (const run of runs.data.workflow_runs) {
-    //   console.log("run", run);
-    // }
+    console.log("Completed status ---------------------------------------");
+    runs = await github.actions.listWorkflowRuns({
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      workflow_id: workflowId,
+      status: "completed",
+    });
+    console.log("Completed runs", runs)
+    for (const run of runs.data.workflow_runs) {
+      console.log("run", run);
+    }
 
     // The number of returned workflow runs in this case is > 0
-    // console.log("Complete & failure status ---------------------------------------");
-    // runs = await github.actions.listWorkflowRuns({
-    //   owner: context.repo.owner,
-    //   repo: context.repo.repo,
-    //   workflow_id: workflowId,
-    //   status: "completed,failure",
-    // });
-    // console.log("Completed & failure runs", runs);
-    // for (const run of runs.data.workflow_runs) {
-    //   console.log("run", run);
-    // }
+    console.log("Complete & failure status ---------------------------------------");
+    runs = await github.actions.listWorkflowRuns({
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      workflow_id: workflowId,
+      status: "completed,failure",
+    });
+    console.log("Completed & failure runs", runs);
+    for (const run of runs.data.workflow_runs) {
+      console.log("run", run);
+    }
 
     // The number of returned workflow runs in this case is > 0
-    // console.log("Complete & success status ---------------------------------------");
-    // runs = await github.actions.listWorkflowRuns({
-    //   owner: context.repo.owner,
-    //   repo: context.repo.repo,
-    //   workflow_id: workflowId,
-    //   status: "completed,success",
-    // });
-    // console.log("Completed & success runs", runs);
-    // for (const run of runs.data.workflow_runs) {
-    //   console.log("run", run);
-    // }
+    console.log("Complete & success status ---------------------------------------");
+    runs = await github.actions.listWorkflowRuns({
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      workflow_id: workflowId,
+      status: "completed,success",
+    });
+    console.log("Completed & success runs", runs);
+    for (const run of runs.data.workflow_runs) {
+      console.log("run", run);
+    }
 
     // The number of returned workflow runs in this case is === 0
-    // console.log("Success & failure status ---------------------------------------");
-    // runs = await github.actions.listWorkflowRuns({
-    //   owner: context.repo.owner,
-    //   repo: context.repo.repo,
-    //   workflow_id: workflowId,
-    //   status: "success,failure",
-    // });
-    // console.log("Success & failure runs", runs);
-    // for (const run of runs.data.workflow_runs) {
-    //   console.log("run", run);
-    // }
+    console.log("Success & failure status ---------------------------------------");
+    runs = await github.actions.listWorkflowRuns({
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      workflow_id: workflowId,
+      status: "success,failure",
+    });
+    console.log("Success & failure runs", runs);
+    for (const run of runs.data.workflow_runs) {
+      console.log("run", run);
+    }
   } catch (error) {
     core.setFailed(error.message);
   }
