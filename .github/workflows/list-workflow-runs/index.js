@@ -1,3 +1,8 @@
+// See how to use this script at here
+// Ref: https://github.com/marilyn79218/react-lazy-show/pull/81/files#diff-791e06a00e373dcb530ab45bfc3ed3f9a576b7e4b6edf75e9aef08fe1251d2faR80
+// Or specify `workflowId` as `workflow-run.yml` which is the workflow filename
+// Ref: https://octokit.github.io/rest.js/v18#actions-list-workflow-runs
+
 module.exports = async (github, context, core, workflowId) => {
   try {
     console.log("workflowId", workflowId);
