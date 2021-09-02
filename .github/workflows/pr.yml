@@ -107,8 +107,7 @@ jobs:
   error-job:
     runs-on: ubuntu-latest
     steps:
-      - name: Get PR info
-        id: get_pr_info
+      - name: Throw error
         uses: actions/github-script@v4
         with:
           script: |
