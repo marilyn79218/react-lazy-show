@@ -53,3 +53,24 @@ jobs:
         run: echo "::set-output name=downloadedData::$(node ./.github/workflows/download-cross-workflow-artifact.js)"
       - name: Post results to Log console
         run: echo "The downloaded ramdom number is ${{ steps.collect_data.outputs.downloadedData }}"
+  log-workflow-run-list:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Display master info
+        run: |
+          echo "Event - ${{ github.event }}"
+          echo "Event ref - ${{ github.event.base_ref }}"
+          echo "Push event - ${{ github.event.push }}"
+          echo "Push status - ${{ github.event.push.status }}"
+          echo "Push conclusion - ${{ github.event.push.conclusion }}"
+          echo "Workflow status - ${{ github.event.workflow_run.status }}"
+          echo "Workflow status - ${{ github.event.workflow_run.status }}"
+      - name: calling API
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const path = require('path');
+            const scriptPath = path.resolve('./.github/workflows/list-workflow-runs/index.js');
+            await require(scriptPath)(github, context, core, "pr.yml");
+
