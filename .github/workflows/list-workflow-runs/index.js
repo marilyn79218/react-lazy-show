@@ -5,8 +5,8 @@
 
 module.exports = async (github, context, core, workflowId) => {
   try {
-    console.log("context", typeof context, context);
     console.log("workflowId", workflowId);
+    console.log("context", typeof context, context);
 
     // API doc: https://octokit.github.io/rest.js/v18#actions-list-workflow-runs
     // List of status & conclusion values
