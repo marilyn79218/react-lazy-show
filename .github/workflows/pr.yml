@@ -103,3 +103,9 @@ jobs:
             const scriptPath = path.resolve('./.github/workflows/dependabot-comments/index.js');
             const commitHash = '${{ github.event.pull_request.head.sha }}';
             await require(scriptPath)(github, context, core, commitHash, "pr");
+  failed-job:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Failed job
+        run: |
+          exit 1
