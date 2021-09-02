@@ -104,18 +104,6 @@ jobs:
             const commitHash = '${{ github.event.pull_request.head.sha }}';
             await require(scriptPath)(github, context, core, commitHash, "pr");
   # Ref: https://github.community/t/run-github-actions-job-only-if-previous-job-has-failed/174786/2
-  # success-job:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Succeed
-  #       run: |
-  #         exit 0
-  # failed-job:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Failed
-  #       run: |
-  #         exit 1
   error-job:
     runs-on: ubuntu-latest
     steps:
