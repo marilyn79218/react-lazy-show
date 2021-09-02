@@ -5,6 +5,8 @@
 
 module.exports = async (github, context, core, workflowId) => {
   try {
+    const prBranch = process.env.PR_BRANCH;
+    console.log("pr branch", prBranch);
     console.log("workflowId", workflowId);
     console.log("context", typeof context, context);
 
@@ -18,6 +20,7 @@ module.exports = async (github, context, core, workflowId) => {
       owner: context.repo.owner,
       repo: context.repo.repo,
       workflow_id: workflowId,
+      branch: prBranch,
     });
     console.log("runs", runs)
     for (const run of runs.data.workflow_runs) {
@@ -66,6 +69,7 @@ module.exports = async (github, context, core, workflowId) => {
       owner: context.repo.owner,
       repo: context.repo.repo,
       workflow_id: workflowId,
+      branch: prBranch,
       status: "failure",
     });
     console.log("Failure runs", runs)
@@ -79,6 +83,7 @@ module.exports = async (github, context, core, workflowId) => {
       owner: context.repo.owner,
       repo: context.repo.repo,
       workflow_id: workflowId,
+      branch: prBranch,
       status: "success",
     });
     console.log("Success runs", runs)
@@ -92,6 +97,7 @@ module.exports = async (github, context, core, workflowId) => {
       owner: context.repo.owner,
       repo: context.repo.repo,
       workflow_id: workflowId,
+      branch: prBranch,
       status: "completed",
     });
     console.log("Completed runs", runs)
@@ -105,6 +111,7 @@ module.exports = async (github, context, core, workflowId) => {
       owner: context.repo.owner,
       repo: context.repo.repo,
       workflow_id: workflowId,
+      branch: prBranch,
       status: "completed,failure",
     });
     console.log("Completed & failure runs", runs);
@@ -118,6 +125,7 @@ module.exports = async (github, context, core, workflowId) => {
       owner: context.repo.owner,
       repo: context.repo.repo,
       workflow_id: workflowId,
+      branch: prBranch,
       status: "completed,success",
     });
     console.log("Completed & success runs", runs);
@@ -131,6 +139,7 @@ module.exports = async (github, context, core, workflowId) => {
       owner: context.repo.owner,
       repo: context.repo.repo,
       workflow_id: workflowId,
+      branch: prBranch,
       status: "success,failure",
     });
     console.log("Success & failure runs", runs);
