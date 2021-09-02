@@ -66,11 +66,30 @@ jobs:
           echo "Push conclusion - ${{ github.event.push.conclusion }}"
           echo "Workflow status - ${{ github.event.workflow_run.status }}"
           echo "Workflow status - ${{ github.event.workflow_run.status }}"
-      - name: calling API
+      - name: Get PR info
+        id: get_pr_info
         uses: actions/github-script@v4
         with:
           script: |
             const path = require('path');
+            const scriptPath = path.resolve('./.github/workflows/dependabot-comments/utils.js');
+            const { getPrInfo } = require(scriptPath);
+            const commitHash = process.env.GITHUB_SHA;
+            const prInfo = await getPrInfo(github, context, core, commitHash);
+            console.log("pr info", prInfo);
+            console.log("pr branch", prInfo.head.ref);
+            core.setOutput("prBranch", prInfo.head.ref);
+      - name: calling API
+        uses: actions/github-script@v4
+        # Option 1: pass prBranch as an env variable
+        env:
+          PR_BRANCH: '${{ steps.get_pr_info.outputs.prBranch }}'
+        with:
+          script: |
+            const path = require('path');
             const scriptPath = path.resolve('./.github/workflows/list-workflow-runs/index.js');
+            // Option 2: pass prBranch as a constant
+            const prBranch = '${{ steps.get_pr_info.outputs.prBranch }}';
+            console.log('prBranch', prBranch);
             await require(scriptPath)(github, context, core, "pr.yml");
 
