@@ -124,7 +124,11 @@ jobs:
         uses: actions/github-script@v4
         with:
           script: |
-            throw new Error("Mock error");
+            try {
+              throw new Error("Mock error");
+            } catch (error) {
+              core.setFailed(error.message);
+            }
   backup-job:
     runs-on: ubuntu-latest
     needs: [error-job]
