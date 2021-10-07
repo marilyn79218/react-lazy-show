@@ -116,10 +116,26 @@ jobs:
             } catch (error) {
               core.setFailed(error.message);
             }
-  backup-job:
+  # Expect job "error-backup-job" will runs
+  error-backup-job:
     runs-on: ubuntu-latest
     needs: [error-job]
     if: always() && needs.error-job.result == 'failure'
+    steps:
+      - name: Run if dependent job failed
+        run: |
+          echo "Backup job running"
+  success-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Succeed
+        run: |
+          exit 0
+  # Expect job "success-backup-job" will NOT runs
+  success-backup-job:
+    runs-on: ubuntu-latest
+    needs: [success-job]
+    if: always() && needs.success-job.result == 'failure'
     steps:
       - name: Run if dependent job failed
         run: |
