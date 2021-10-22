@@ -1,0 +1,27 @@
+name: lighthouse
+
+on:
+  # schedule:
+  #   # Run at 2am UTC (10am SGT) daily.
+  #   - cron: "0 2 * * *"
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Audit pages using Lighthouse
+        uses: treosh/lighthouse-ci-action@v7
+        with:
+          # 5 times because the median of 5 scores is twice as stable
+          # than 1, see
+          # https://github.com/GoogleChrome/lighthouse/blob/master/docs/variability.md#run-lighthouse-multiple-times.
+          runs: 3
+          urls: |
+            https://www.carousell.sg/
+            https://www.carousell.sg/p/iphone-7-128gb-249127864/
+          serverBaseUrl: ${{ secrets.LHCI_SERVER_URL }}
+          serverToken: ${{ secrets.LHCI_SERVER_TOKEN }}
