@@ -96,6 +96,7 @@ jobs:
         run: ls -R
         working-directory: .
       - name: "Writing comments"
+        id: writing_comments
         uses: actions/github-script@v4
         with:
           script: |
@@ -103,3 +104,12 @@ jobs:
             const scriptPath = path.resolve('./.github/workflows/dependabot-comments/index.js');
             const commitHash = '${{ github.event.pull_request.head.sha }}';
             await require(scriptPath)(github, context, core, commitHash, "pr");
+      - name: Send data to my google spreadsheet
+        id: update_worksheet
+        uses: jroehl/gsheet.action@v1.0.0
+        with:
+          spreadsheetId: 1X4eMsIMWQHsl_6iYsyU78XASNXVxUJQy1E4FkWRcd0o
+          commands: ${{ steps.writing_comments.outputs.gsheetCommands }}
+        env:
+          GSHEET_CLIENT_EMAIL: ${{ secrets.GSHEET_CLIENT_EMAIL }}
+          GSHEET_PRIVATE_KEY: ${{ secrets.GSHEET_PRIVATE_KEY }}
