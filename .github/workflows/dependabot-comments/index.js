@@ -67,6 +67,30 @@ module.exports = async (github, context, core, commitHash, workflowName) => {
         body: commentBody,
       });
     }
+
+    core.setOutput(
+      "gsheetCommands",
+      JSON.stringify([
+        {
+          command: "getWorksheet",
+          args: { worksheetTitle: "PR Comments" },
+        },
+        {
+          command: "appendData",
+          args: {
+            data: [
+              [
+                new Date().toISOString(),
+                prNumber,
+                commitHash,
+                commentBody,
+              ],
+            ],
+            minCol: 1,
+          },
+        },
+      ]),
+    );
   } catch (error) {
     core.setFailed(error.message);
   }
