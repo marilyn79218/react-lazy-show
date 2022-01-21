@@ -72,6 +72,10 @@ module.exports = async (github, context, core, commitHash, workflowName) => {
       "gsheetCommands",
       JSON.stringify([
         {
+          command: "getWorksheet",
+          args: { worksheetTitle: "PR Comments" },
+        },
+        {
           command: "appendData",
           args: {
             data: [
